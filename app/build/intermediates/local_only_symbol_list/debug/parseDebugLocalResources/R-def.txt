@@ -1,0 +1,33 @@
+R_DEF: Internal format may change without notice
+local
+string app_name
+string app_tagline
+string continue_email
+string continue_google
+string continue_guest
+string create_account
+string data_credit
+string default_web_client_id
+string email
+string firebase_missing_body
+string firebase_missing_title
+string forgot_password
+string gcm_defaultSenderId
+string google_api_key
+string google_app_id
+string google_crash_reporting_api_key
+string google_storage_bucket
+string google_web_client_id
+string login_subtitle
+string login_title
+string map_credit
+string password
+string project_id
+string saved_dev_body
+string saved_dev_title
+string saved_empty
+string search_hint
+string tab_map
+string tab_profile
+string tab_saved
+style Theme.FastApp

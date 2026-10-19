@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">917969299667-1qhfqjic7qj2sualhnj6eknq2oktaks2.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">917969299667</string>
+    <string name="google_api_key" translatable="false">AIzaSyCXzMP1hxJhUYViCio7WogSG6ll8D8JkqI</string>
+    <string name="google_app_id" translatable="false">1:917969299667:android:39118ce06b8dbed3aa8c26</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyCXzMP1hxJhUYViCio7WogSG6ll8D8JkqI</string>
+    <string name="google_storage_bucket" translatable="false">vku-laptrinhdidong-email-auth.firebasestorage.app</string>
+    <string name="project_id" translatable="false">vku-laptrinhdidong-email-auth</string>
+</resources>

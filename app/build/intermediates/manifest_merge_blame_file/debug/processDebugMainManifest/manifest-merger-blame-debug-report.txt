@@ -1,0 +1,364 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.thinhnk.fastapp"
+4    android:versionCode="1"
+5    android:versionName="1.0.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="26"
+9        android:targetSdkVersion="35" />
+10
+11    <uses-permission android:name="android.permission.INTERNET" />
+11-->/home/thinh/VKU/LAPTRINHDIDONG/FAST-RECHARGE/app/src/main/AndroidManifest.xml:3:5-67
+11-->/home/thinh/VKU/LAPTRINHDIDONG/FAST-RECHARGE/app/src/main/AndroidManifest.xml:3:22-64
+12    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+12-->/home/thinh/VKU/LAPTRINHDIDONG/FAST-RECHARGE/app/src/main/AndroidManifest.xml:4:5-79
+12-->/home/thinh/VKU/LAPTRINHDIDONG/FAST-RECHARGE/app/src/main/AndroidManifest.xml:4:22-76
+13    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+13-->/home/thinh/VKU/LAPTRINHDIDONG/FAST-RECHARGE/app/src/main/AndroidManifest.xml:5:5-81
+13-->/home/thinh/VKU/LAPTRINHDIDONG/FAST-RECHARGE/app/src/main/AndroidManifest.xml:5:22-78
+14    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+14-->/home/thinh/VKU/LAPTRINHDIDONG/FAST-RECHARGE/app/src/main/AndroidManifest.xml:6:5-79
+14-->/home/thinh/VKU/LAPTRINHDIDONG/FAST-RECHARGE/app/src/main/AndroidManifest.xml:6:22-76
+15
+16    <uses-feature
+16-->[org.maplibre.gl:android-sdk:12.3.1] /home/thinh/.gradle/caches/8.12/transforms/259a59ab850e0be438263053c3069e51/transformed/android-sdk-12.3.1/AndroidManifest.xml:7:5-9:36
+17        android:name="android.hardware.wifi"
+17-->[org.maplibre.gl:android-sdk:12.3.1] /home/thinh/.gradle/caches/8.12/transforms/259a59ab850e0be438263053c3069e51/transformed/android-sdk-12.3.1/AndroidManifest.xml:8:9-45
+18        android:required="false" />
+18-->[org.maplibre.gl:android-sdk:12.3.1] /home/thinh/.gradle/caches/8.12/transforms/259a59ab850e0be438263053c3069e51/transformed/android-sdk-12.3.1/AndroidManifest.xml:9:9-33
+19
+20    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+20-->[org.maplibre.gl:android-sdk:12.3.1] /home/thinh/.gradle/caches/8.12/transforms/259a59ab850e0be438263053c3069e51/transformed/android-sdk-12.3.1/AndroidManifest.xml:13:5-76
+20-->[org.maplibre.gl:android-sdk:12.3.1] /home/thinh/.gradle/caches/8.12/transforms/259a59ab850e0be438263053c3069e51/transformed/android-sdk-12.3.1/AndroidManifest.xml:13:22-73
+21    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+21-->[com.google.android.recaptcha:recaptcha:18.4.0] /home/thinh/.gradle/caches/8.12/transforms/dd42a74435ddf779ad7b5f9accea42fc/transformed/recaptcha-18.4.0/AndroidManifest.xml:9:5-98
+21-->[com.google.android.recaptcha:recaptcha:18.4.0] /home/thinh/.gradle/caches/8.12/transforms/dd42a74435ddf779ad7b5f9accea42fc/transformed/recaptcha-18.4.0/AndroidManifest.xml:9:22-95
+22
+23    <permission
+23-->[androidx.core:core:1.15.0] /home/thinh/.gradle/caches/8.12/transforms/2dc79ca7543025c0f6f199fbc5e6faab/transformed/core-1.15.0/AndroidManifest.xml:22:5-24:47
+24        android:name="com.thinhnk.fastapp.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+24-->[androidx.core:core:1.15.0] /home/thinh/.gradle/caches/8.12/transforms/2dc79ca7543025c0f6f199fbc5e6faab/transformed/core-1.15.0/AndroidManifest.xml:23:9-81
+25        android:protectionLevel="signature" />
+25-->[androidx.core:core:1.15.0] /home/thinh/.gradle/caches/8.12/transforms/2dc79ca7543025c0f6f199fbc5e6faab/transformed/core-1.15.0/AndroidManifest.xml:24:9-44
+26
+27    <uses-permission android:name="com.thinhnk.fastapp.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+27-->[androidx.core:core:1.15.0] /home/thinh/.gradle/caches/8.12/transforms/2dc79ca7543025c0f6f199fbc5e6faab/transformed/core-1.15.0/AndroidManifest.xml:26:5-97
+27-->[androidx.core:core:1.15.0] /home/thinh/.gradle/caches/8.12/transforms/2dc79ca7543025c0f6f199fbc5e6faab/transformed/core-1.15.0/AndroidManifest.xml:26:22-94
+28
+29    <application
+29-->/home/thinh/VKU/LAPTRINHDIDONG/FAST-RECHARGE/app/src/main/AndroidManifest.xml:8:5-25:19
+30        android:name="com.thinhnk.fastapp.FastApp"
+30-->/home/thinh/VKU/LAPTRINHDIDONG/FAST-RECHARGE/app/src/main/AndroidManifest.xml:9:9-32
+31        android:allowBackup="true"
+31-->/home/thinh/VKU/LAPTRINHDIDONG/FAST-RECHARGE/app/src/main/AndroidManifest.xml:10:9-35
+32        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+32-->[androidx.core:core:1.15.0] /home/thinh/.gradle/caches/8.12/transforms/2dc79ca7543025c0f6f199fbc5e6faab/transformed/core-1.15.0/AndroidManifest.xml:28:18-86
+33        android:debuggable="true"
+34        android:extractNativeLibs="false"
+35        android:label="@string/app_name"
+35-->/home/thinh/VKU/LAPTRINHDIDONG/FAST-RECHARGE/app/src/main/AndroidManifest.xml:11:9-41
+36        android:supportsRtl="true"
+36-->/home/thinh/VKU/LAPTRINHDIDONG/FAST-RECHARGE/app/src/main/AndroidManifest.xml:12:9-35
+37        android:theme="@style/Theme.FastApp" >
+37-->/home/thinh/VKU/LAPTRINHDIDONG/FAST-RECHARGE/app/src/main/AndroidManifest.xml:13:9-45
+38        <activity
+38-->/home/thinh/VKU/LAPTRINHDIDONG/FAST-RECHARGE/app/src/main/AndroidManifest.xml:15:9-23:20
+39            android:name="com.thinhnk.fastapp.MainActivity"
+39-->/home/thinh/VKU/LAPTRINHDIDONG/FAST-RECHARGE/app/src/main/AndroidManifest.xml:16:13-41
+40            android:exported="true"
+40-->/home/thinh/VKU/LAPTRINHDIDONG/FAST-RECHARGE/app/src/main/AndroidManifest.xml:17:13-36
+41            android:windowSoftInputMode="adjustResize" >
+41-->/home/thinh/VKU/LAPTRINHDIDONG/FAST-RECHARGE/app/src/main/AndroidManifest.xml:18:13-55
+42            <intent-filter>
+42-->/home/thinh/VKU/LAPTRINHDIDONG/FAST-RECHARGE/app/src/main/AndroidManifest.xml:19:13-22:29
+43                <action android:name="android.intent.action.MAIN" />
+43-->/home/thinh/VKU/LAPTRINHDIDONG/FAST-RECHARGE/app/src/main/AndroidManifest.xml:20:17-69
+43-->/home/thinh/VKU/LAPTRINHDIDONG/FAST-RECHARGE/app/src/main/AndroidManifest.xml:20:25-66
+44
+45                <category android:name="android.intent.category.LAUNCHER" />
+45-->/home/thinh/VKU/LAPTRINHDIDONG/FAST-RECHARGE/app/src/main/AndroidManifest.xml:21:17-77
+45-->/home/thinh/VKU/LAPTRINHDIDONG/FAST-RECHARGE/app/src/main/AndroidManifest.xml:21:27-74
+46            </intent-filter>
+47        </activity>
+48
+49        <service
+49-->[androidx.credentials:credentials-play-services-auth:1.3.0] /home/thinh/.gradle/caches/8.12/transforms/b2989601e59fb28e390048590132207c/transformed/credentials-play-services-auth-1.3.0/AndroidManifest.xml:24:9-32:19
+50            android:name="androidx.credentials.playservices.CredentialProviderMetadataHolder"
+50-->[androidx.credentials:credentials-play-services-auth:1.3.0] /home/thinh/.gradle/caches/8.12/transforms/b2989601e59fb28e390048590132207c/transformed/credentials-play-services-auth-1.3.0/AndroidManifest.xml:25:13-94
+51            android:enabled="true"
+51-->[androidx.credentials:credentials-play-services-auth:1.3.0] /home/thinh/.gradle/caches/8.12/transforms/b2989601e59fb28e390048590132207c/transformed/credentials-play-services-auth-1.3.0/AndroidManifest.xml:26:13-35
+52            android:exported="false" >
+52-->[androidx.credentials:credentials-play-services-auth:1.3.0] /home/thinh/.gradle/caches/8.12/transforms/b2989601e59fb28e390048590132207c/transformed/credentials-play-services-auth-1.3.0/AndroidManifest.xml:27:13-37
+53            <meta-data
+53-->[androidx.credentials:credentials-play-services-auth:1.3.0] /home/thinh/.gradle/caches/8.12/transforms/b2989601e59fb28e390048590132207c/transformed/credentials-play-services-auth-1.3.0/AndroidManifest.xml:29:13-31:104
+54                android:name="androidx.credentials.CREDENTIAL_PROVIDER_KEY"
+54-->[androidx.credentials:credentials-play-services-auth:1.3.0] /home/thinh/.gradle/caches/8.12/transforms/b2989601e59fb28e390048590132207c/transformed/credentials-play-services-auth-1.3.0/AndroidManifest.xml:30:17-76
+55                android:value="androidx.credentials.playservices.CredentialProviderPlayServicesImpl" />
+55-->[androidx.credentials:credentials-play-services-auth:1.3.0] /home/thinh/.gradle/caches/8.12/transforms/b2989601e59fb28e390048590132207c/transformed/credentials-play-services-auth-1.3.0/AndroidManifest.xml:31:17-101
+56        </service>
+57
+58        <activity
+58-->[androidx.credentials:credentials-play-services-auth:1.3.0] /home/thinh/.gradle/caches/8.12/transforms/b2989601e59fb28e390048590132207c/transformed/credentials-play-services-auth-1.3.0/AndroidManifest.xml:34:9-41:20
+59            android:name="androidx.credentials.playservices.HiddenActivity"
+59-->[androidx.credentials:credentials-play-services-auth:1.3.0] /home/thinh/.gradle/caches/8.12/transforms/b2989601e59fb28e390048590132207c/transformed/credentials-play-services-auth-1.3.0/AndroidManifest.xml:35:13-76
+60            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+60-->[androidx.credentials:credentials-play-services-auth:1.3.0] /home/thinh/.gradle/caches/8.12/transforms/b2989601e59fb28e390048590132207c/transformed/credentials-play-services-auth-1.3.0/AndroidManifest.xml:36:13-87
+61            android:enabled="true"
+61-->[androidx.credentials:credentials-play-services-auth:1.3.0] /home/thinh/.gradle/caches/8.12/transforms/b2989601e59fb28e390048590132207c/transformed/credentials-play-services-auth-1.3.0/AndroidManifest.xml:37:13-35
+62            android:exported="false"
+62-->[androidx.credentials:credentials-play-services-auth:1.3.0] /home/thinh/.gradle/caches/8.12/transforms/b2989601e59fb28e390048590132207c/transformed/credentials-play-services-auth-1.3.0/AndroidManifest.xml:38:13-37
+63            android:fitsSystemWindows="true"
+63-->[androidx.credentials:credentials-play-services-auth:1.3.0] /home/thinh/.gradle/caches/8.12/transforms/b2989601e59fb28e390048590132207c/transformed/credentials-play-services-auth-1.3.0/AndroidManifest.xml:39:13-45
+64            android:theme="@style/Theme.Hidden" >
+64-->[androidx.credentials:credentials-play-services-auth:1.3.0] /home/thinh/.gradle/caches/8.12/transforms/b2989601e59fb28e390048590132207c/transformed/credentials-play-services-auth-1.3.0/AndroidManifest.xml:40:13-48
+65        </activity>
+66        <activity
+66-->[com.google.android.gms:play-services-auth:21.1.1] /home/thinh/.gradle/caches/8.12/transforms/451406693d05b6bad0db9b7fc072f95e/transformed/play-services-auth-21.1.1/AndroidManifest.xml:23:9-27:75
+67            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
+67-->[com.google.android.gms:play-services-auth:21.1.1] /home/thinh/.gradle/caches/8.12/transforms/451406693d05b6bad0db9b7fc072f95e/transformed/play-services-auth-21.1.1/AndroidManifest.xml:24:13-93
+68            android:excludeFromRecents="true"
+68-->[com.google.android.gms:play-services-auth:21.1.1] /home/thinh/.gradle/caches/8.12/transforms/451406693d05b6bad0db9b7fc072f95e/transformed/play-services-auth-21.1.1/AndroidManifest.xml:25:13-46
+69            android:exported="false"
+69-->[com.google.android.gms:play-services-auth:21.1.1] /home/thinh/.gradle/caches/8.12/transforms/451406693d05b6bad0db9b7fc072f95e/transformed/play-services-auth-21.1.1/AndroidManifest.xml:26:13-37
+70            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+70-->[com.google.android.gms:play-services-auth:21.1.1] /home/thinh/.gradle/caches/8.12/transforms/451406693d05b6bad0db9b7fc072f95e/transformed/play-services-auth-21.1.1/AndroidManifest.xml:27:13-72
+71        <!--
+72            Service handling Google Sign-In user revocation. For apps that do not integrate with
+73            Google Sign-In, this service will never be started.
+74        -->
+75        <service
+75-->[com.google.android.gms:play-services-auth:21.1.1] /home/thinh/.gradle/caches/8.12/transforms/451406693d05b6bad0db9b7fc072f95e/transformed/play-services-auth-21.1.1/AndroidManifest.xml:33:9-37:51
+76            android:name="com.google.android.gms.auth.api.signin.RevocationBoundService"
+76-->[com.google.android.gms:play-services-auth:21.1.1] /home/thinh/.gradle/caches/8.12/transforms/451406693d05b6bad0db9b7fc072f95e/transformed/play-services-auth-21.1.1/AndroidManifest.xml:34:13-89
+77            android:exported="true"
+77-->[com.google.android.gms:play-services-auth:21.1.1] /home/thinh/.gradle/caches/8.12/transforms/451406693d05b6bad0db9b7fc072f95e/transformed/play-services-auth-21.1.1/AndroidManifest.xml:35:13-36
+78            android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION"
+78-->[com.google.android.gms:play-services-auth:21.1.1] /home/thinh/.gradle/caches/8.12/transforms/451406693d05b6bad0db9b7fc072f95e/transformed/play-services-auth-21.1.1/AndroidManifest.xml:36:13-107
+79            android:visibleToInstantApps="true" />
+79-->[com.google.android.gms:play-services-auth:21.1.1] /home/thinh/.gradle/caches/8.12/transforms/451406693d05b6bad0db9b7fc072f95e/transformed/play-services-auth-21.1.1/AndroidManifest.xml:37:13-48
+80
+81        <activity
+81-->[com.google.firebase:firebase-auth:22.3.1] /home/thinh/.gradle/caches/8.12/transforms/8abdae61a2bee2729cb9f8c636f54748/transformed/firebase-auth-22.3.1/AndroidManifest.xml:29:9-46:20
+82            android:name="com.google.firebase.auth.internal.GenericIdpActivity"
+82-->[com.google.firebase:firebase-auth:22.3.1] /home/thinh/.gradle/caches/8.12/transforms/8abdae61a2bee2729cb9f8c636f54748/transformed/firebase-auth-22.3.1/AndroidManifest.xml:30:13-80
+83            android:excludeFromRecents="true"
+83-->[com.google.firebase:firebase-auth:22.3.1] /home/thinh/.gradle/caches/8.12/transforms/8abdae61a2bee2729cb9f8c636f54748/transformed/firebase-auth-22.3.1/AndroidManifest.xml:31:13-46
+84            android:exported="true"
+84-->[com.google.firebase:firebase-auth:22.3.1] /home/thinh/.gradle/caches/8.12/transforms/8abdae61a2bee2729cb9f8c636f54748/transformed/firebase-auth-22.3.1/AndroidManifest.xml:32:13-36
+85            android:launchMode="singleTask"
+85-->[com.google.firebase:firebase-auth:22.3.1] /home/thinh/.gradle/caches/8.12/transforms/8abdae61a2bee2729cb9f8c636f54748/transformed/firebase-auth-22.3.1/AndroidManifest.xml:33:13-44
+86            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+86-->[com.google.firebase:firebase-auth:22.3.1] /home/thinh/.gradle/caches/8.12/transforms/8abdae61a2bee2729cb9f8c636f54748/transformed/firebase-auth-22.3.1/AndroidManifest.xml:34:13-72
+87            <intent-filter>
+87-->[com.google.firebase:firebase-auth:22.3.1] /home/thinh/.gradle/caches/8.12/transforms/8abdae61a2bee2729cb9f8c636f54748/transformed/firebase-auth-22.3.1/AndroidManifest.xml:35:13-45:29
+88                <action android:name="android.intent.action.VIEW" />
+88-->[com.google.firebase:firebase-auth:22.3.1] /home/thinh/.gradle/caches/8.12/transforms/8abdae61a2bee2729cb9f8c636f54748/transformed/firebase-auth-22.3.1/AndroidManifest.xml:36:17-69
+88-->[com.google.firebase:firebase-auth:22.3.1] /home/thinh/.gradle/caches/8.12/transforms/8abdae61a2bee2729cb9f8c636f54748/transformed/firebase-auth-22.3.1/AndroidManifest.xml:36:25-66
+89
+90                <category android:name="android.intent.category.DEFAULT" />
+90-->[com.google.firebase:firebase-auth:22.3.1] /home/thinh/.gradle/caches/8.12/transforms/8abdae61a2bee2729cb9f8c636f54748/transformed/firebase-auth-22.3.1/AndroidManifest.xml:38:17-76
+90-->[com.google.firebase:firebase-auth:22.3.1] /home/thinh/.gradle/caches/8.12/transforms/8abdae61a2bee2729cb9f8c636f54748/transformed/firebase-auth-22.3.1/AndroidManifest.xml:38:27-73
+91                <category android:name="android.intent.category.BROWSABLE" />
+91-->[com.google.firebase:firebase-auth:22.3.1] /home/thinh/.gradle/caches/8.12/transforms/8abdae61a2bee2729cb9f8c636f54748/transformed/firebase-auth-22.3.1/AndroidManifest.xml:39:17-78
+91-->[com.google.firebase:firebase-auth:22.3.1] /home/thinh/.gradle/caches/8.12/transforms/8abdae61a2bee2729cb9f8c636f54748/transformed/firebase-auth-22.3.1/AndroidManifest.xml:39:27-75
+92
+93                <data
+93-->[com.google.firebase:firebase-auth:22.3.1] /home/thinh/.gradle/caches/8.12/transforms/8abdae61a2bee2729cb9f8c636f54748/transformed/firebase-auth-22.3.1/AndroidManifest.xml:41:17-44:51
+94                    android:host="firebase.auth"
+94-->[com.google.firebase:firebase-auth:22.3.1] /home/thinh/.gradle/caches/8.12/transforms/8abdae61a2bee2729cb9f8c636f54748/transformed/firebase-auth-22.3.1/AndroidManifest.xml:42:21-49
+95                    android:path="/"
+95-->[com.google.firebase:firebase-auth:22.3.1] /home/thinh/.gradle/caches/8.12/transforms/8abdae61a2bee2729cb9f8c636f54748/transformed/firebase-auth-22.3.1/AndroidManifest.xml:43:21-37
+96                    android:scheme="genericidp" />
+96-->[com.google.firebase:firebase-auth:22.3.1] /home/thinh/.gradle/caches/8.12/transforms/8abdae61a2bee2729cb9f8c636f54748/transformed/firebase-auth-22.3.1/AndroidManifest.xml:44:21-48
+97            </intent-filter>
+98        </activity>
+99        <activity
+99-->[com.google.firebase:firebase-auth:22.3.1] /home/thinh/.gradle/caches/8.12/transforms/8abdae61a2bee2729cb9f8c636f54748/transformed/firebase-auth-22.3.1/AndroidManifest.xml:47:9-64:20
+100            android:name="com.google.firebase.auth.internal.RecaptchaActivity"
+100-->[com.google.firebase:firebase-auth:22.3.1] /home/thinh/.gradle/caches/8.12/transforms/8abdae61a2bee2729cb9f8c636f54748/transformed/firebase-auth-22.3.1/AndroidManifest.xml:48:13-79
+101            android:excludeFromRecents="true"
+101-->[com.google.firebase:firebase-auth:22.3.1] /home/thinh/.gradle/caches/8.12/transforms/8abdae61a2bee2729cb9f8c636f54748/transformed/firebase-auth-22.3.1/AndroidManifest.xml:49:13-46
+102            android:exported="true"
+102-->[com.google.firebase:firebase-auth:22.3.1] /home/thinh/.gradle/caches/8.12/transforms/8abdae61a2bee2729cb9f8c636f54748/transformed/firebase-auth-22.3.1/AndroidManifest.xml:50:13-36
+103            android:launchMode="singleTask"
+103-->[com.google.firebase:firebase-auth:22.3.1] /home/thinh/.gradle/caches/8.12/transforms/8abdae61a2bee2729cb9f8c636f54748/transformed/firebase-auth-22.3.1/AndroidManifest.xml:51:13-44
+104            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+104-->[com.google.firebase:firebase-auth:22.3.1] /home/thinh/.gradle/caches/8.12/transforms/8abdae61a2bee2729cb9f8c636f54748/transformed/firebase-auth-22.3.1/AndroidManifest.xml:52:13-72
+105            <intent-filter>
+105-->[com.google.firebase:firebase-auth:22.3.1] /home/thinh/.gradle/caches/8.12/transforms/8abdae61a2bee2729cb9f8c636f54748/transformed/firebase-auth-22.3.1/AndroidManifest.xml:53:13-63:29
+106                <action android:name="android.intent.action.VIEW" />
+106-->[com.google.firebase:firebase-auth:22.3.1] /home/thinh/.gradle/caches/8.12/transforms/8abdae61a2bee2729cb9f8c636f54748/transformed/firebase-auth-22.3.1/AndroidManifest.xml:36:17-69
+106-->[com.google.firebase:firebase-auth:22.3.1] /home/thinh/.gradle/caches/8.12/transforms/8abdae61a2bee2729cb9f8c636f54748/transformed/firebase-auth-22.3.1/AndroidManifest.xml:36:25-66
+107
+108                <category android:name="android.intent.category.DEFAULT" />
+108-->[com.google.firebase:firebase-auth:22.3.1] /home/thinh/.gradle/caches/8.12/transforms/8abdae61a2bee2729cb9f8c636f54748/transformed/firebase-auth-22.3.1/AndroidManifest.xml:38:17-76
+108-->[com.google.firebase:firebase-auth:22.3.1] /home/thinh/.gradle/caches/8.12/transforms/8abdae61a2bee2729cb9f8c636f54748/transformed/firebase-auth-22.3.1/AndroidManifest.xml:38:27-73
+109                <category android:name="android.intent.category.BROWSABLE" />
+109-->[com.google.firebase:firebase-auth:22.3.1] /home/thinh/.gradle/caches/8.12/transforms/8abdae61a2bee2729cb9f8c636f54748/transformed/firebase-auth-22.3.1/AndroidManifest.xml:39:17-78
+109-->[com.google.firebase:firebase-auth:22.3.1] /home/thinh/.gradle/caches/8.12/transforms/8abdae61a2bee2729cb9f8c636f54748/transformed/firebase-auth-22.3.1/AndroidManifest.xml:39:27-75
+110
+111                <data
+111-->[com.google.firebase:firebase-auth:22.3.1] /home/thinh/.gradle/caches/8.12/transforms/8abdae61a2bee2729cb9f8c636f54748/transformed/firebase-auth-22.3.1/AndroidManifest.xml:41:17-44:51
+112                    android:host="firebase.auth"
+112-->[com.google.firebase:firebase-auth:22.3.1] /home/thinh/.gradle/caches/8.12/transforms/8abdae61a2bee2729cb9f8c636f54748/transformed/firebase-auth-22.3.1/AndroidManifest.xml:42:21-49
+113                    android:path="/"
+113-->[com.google.firebase:firebase-auth:22.3.1] /home/thinh/.gradle/caches/8.12/transforms/8abdae61a2bee2729cb9f8c636f54748/transformed/firebase-auth-22.3.1/AndroidManifest.xml:43:21-37
+114                    android:scheme="recaptcha" />
+114-->[com.google.firebase:firebase-auth:22.3.1] /home/thinh/.gradle/caches/8.12/transforms/8abdae61a2bee2729cb9f8c636f54748/transformed/firebase-auth-22.3.1/AndroidManifest.xml:44:21-48
+115            </intent-filter>
+116        </activity>
+117
+118        <service
+118-->[com.google.firebase:firebase-auth:22.3.1] /home/thinh/.gradle/caches/8.12/transforms/8abdae61a2bee2729cb9f8c636f54748/transformed/firebase-auth-22.3.1/AndroidManifest.xml:66:9-72:19
+119            android:name="com.google.firebase.components.ComponentDiscoveryService"
+119-->[com.google.firebase:firebase-auth:22.3.1] /home/thinh/.gradle/caches/8.12/transforms/8abdae61a2bee2729cb9f8c636f54748/transformed/firebase-auth-22.3.1/AndroidManifest.xml:67:13-84
+120            android:directBootAware="true"
+120-->[com.google.firebase:firebase-common:20.4.3] /home/thinh/.gradle/caches/8.12/transforms/9477ba6c4a8eb0a00563c1eee27306e4/transformed/firebase-common-20.4.3/AndroidManifest.xml:32:13-43
+121            android:exported="false" >
+121-->[com.google.firebase:firebase-auth:22.3.1] /home/thinh/.gradle/caches/8.12/transforms/8abdae61a2bee2729cb9f8c636f54748/transformed/firebase-auth-22.3.1/AndroidManifest.xml:68:13-37
+122            <meta-data
+122-->[com.google.firebase:firebase-auth:22.3.1] /home/thinh/.gradle/caches/8.12/transforms/8abdae61a2bee2729cb9f8c636f54748/transformed/firebase-auth-22.3.1/AndroidManifest.xml:69:13-71:85
+123                android:name="com.google.firebase.components:com.google.firebase.auth.FirebaseAuthRegistrar"
+123-->[com.google.firebase:firebase-auth:22.3.1] /home/thinh/.gradle/caches/8.12/transforms/8abdae61a2bee2729cb9f8c636f54748/transformed/firebase-auth-22.3.1/AndroidManifest.xml:70:17-109
+124                android:value="com.google.firebase.components.ComponentRegistrar" />
+124-->[com.google.firebase:firebase-auth:22.3.1] /home/thinh/.gradle/caches/8.12/transforms/8abdae61a2bee2729cb9f8c636f54748/transformed/firebase-auth-22.3.1/AndroidManifest.xml:71:17-82
+125            <meta-data
+125-->[com.google.firebase:firebase-firestore:24.11.1] /home/thinh/.gradle/caches/8.12/transforms/2547abcd4c9e590682c28e9325c23ab0/transformed/firebase-firestore-24.11.1/AndroidManifest.xml:17:13-19:85
+126                android:name="com.google.firebase.components:com.google.firebase.firestore.FirebaseFirestoreKtxRegistrar"
+126-->[com.google.firebase:firebase-firestore:24.11.1] /home/thinh/.gradle/caches/8.12/transforms/2547abcd4c9e590682c28e9325c23ab0/transformed/firebase-firestore-24.11.1/AndroidManifest.xml:18:17-122
+127                android:value="com.google.firebase.components.ComponentRegistrar" />
+127-->[com.google.firebase:firebase-firestore:24.11.1] /home/thinh/.gradle/caches/8.12/transforms/2547abcd4c9e590682c28e9325c23ab0/transformed/firebase-firestore-24.11.1/AndroidManifest.xml:19:17-82
+128            <meta-data
+128-->[com.google.firebase:firebase-firestore:24.11.1] /home/thinh/.gradle/caches/8.12/transforms/2547abcd4c9e590682c28e9325c23ab0/transformed/firebase-firestore-24.11.1/AndroidManifest.xml:20:13-22:85
+129                android:name="com.google.firebase.components:com.google.firebase.firestore.FirestoreRegistrar"
+129-->[com.google.firebase:firebase-firestore:24.11.1] /home/thinh/.gradle/caches/8.12/transforms/2547abcd4c9e590682c28e9325c23ab0/transformed/firebase-firestore-24.11.1/AndroidManifest.xml:21:17-111
+130                android:value="com.google.firebase.components.ComponentRegistrar" />
+130-->[com.google.firebase:firebase-firestore:24.11.1] /home/thinh/.gradle/caches/8.12/transforms/2547abcd4c9e590682c28e9325c23ab0/transformed/firebase-firestore-24.11.1/AndroidManifest.xml:22:17-82
+131            <meta-data
+131-->[com.google.firebase:firebase-common-ktx:20.4.3] /home/thinh/.gradle/caches/8.12/transforms/77eb85062048178ed6d0c674cdf86315/transformed/firebase-common-ktx-20.4.3/AndroidManifest.xml:12:13-14:85
+132                android:name="com.google.firebase.components:com.google.firebase.ktx.FirebaseCommonLegacyRegistrar"
+132-->[com.google.firebase:firebase-common-ktx:20.4.3] /home/thinh/.gradle/caches/8.12/transforms/77eb85062048178ed6d0c674cdf86315/transformed/firebase-common-ktx-20.4.3/AndroidManifest.xml:13:17-116
+133                android:value="com.google.firebase.components.ComponentRegistrar" />
+133-->[com.google.firebase:firebase-common-ktx:20.4.3] /home/thinh/.gradle/caches/8.12/transforms/77eb85062048178ed6d0c674cdf86315/transformed/firebase-common-ktx-20.4.3/AndroidManifest.xml:14:17-82
+134            <meta-data
+134-->[com.google.firebase:firebase-common:20.4.3] /home/thinh/.gradle/caches/8.12/transforms/9477ba6c4a8eb0a00563c1eee27306e4/transformed/firebase-common-20.4.3/AndroidManifest.xml:35:13-37:85
+135                android:name="com.google.firebase.components:com.google.firebase.FirebaseCommonKtxRegistrar"
+135-->[com.google.firebase:firebase-common:20.4.3] /home/thinh/.gradle/caches/8.12/transforms/9477ba6c4a8eb0a00563c1eee27306e4/transformed/firebase-common-20.4.3/AndroidManifest.xml:36:17-109
+136                android:value="com.google.firebase.components.ComponentRegistrar" />
+136-->[com.google.firebase:firebase-common:20.4.3] /home/thinh/.gradle/caches/8.12/transforms/9477ba6c4a8eb0a00563c1eee27306e4/transformed/firebase-common-20.4.3/AndroidManifest.xml:37:17-82
+137        </service>
+138
+139        <activity
+139-->[com.google.android.gms:play-services-base:18.3.0] /home/thinh/.gradle/caches/8.12/transforms/daff24f6713eed2bac07ffc9a8fef4cc/transformed/play-services-base-18.3.0/AndroidManifest.xml:20:9-22:45
+140            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+140-->[com.google.android.gms:play-services-base:18.3.0] /home/thinh/.gradle/caches/8.12/transforms/daff24f6713eed2bac07ffc9a8fef4cc/transformed/play-services-base-18.3.0/AndroidManifest.xml:20:19-85
+141            android:exported="false"
+141-->[com.google.android.gms:play-services-base:18.3.0] /home/thinh/.gradle/caches/8.12/transforms/daff24f6713eed2bac07ffc9a8fef4cc/transformed/play-services-base-18.3.0/AndroidManifest.xml:22:19-43
+142            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+142-->[com.google.android.gms:play-services-base:18.3.0] /home/thinh/.gradle/caches/8.12/transforms/daff24f6713eed2bac07ffc9a8fef4cc/transformed/play-services-base-18.3.0/AndroidManifest.xml:21:19-78
+143
+144        <provider
+144-->[com.google.firebase:firebase-common:20.4.3] /home/thinh/.gradle/caches/8.12/transforms/9477ba6c4a8eb0a00563c1eee27306e4/transformed/firebase-common-20.4.3/AndroidManifest.xml:23:9-28:39
+145            android:name="com.google.firebase.provider.FirebaseInitProvider"
+145-->[com.google.firebase:firebase-common:20.4.3] /home/thinh/.gradle/caches/8.12/transforms/9477ba6c4a8eb0a00563c1eee27306e4/transformed/firebase-common-20.4.3/AndroidManifest.xml:24:13-77
+146            android:authorities="com.thinhnk.fastapp.firebaseinitprovider"
+146-->[com.google.firebase:firebase-common:20.4.3] /home/thinh/.gradle/caches/8.12/transforms/9477ba6c4a8eb0a00563c1eee27306e4/transformed/firebase-common-20.4.3/AndroidManifest.xml:25:13-72
+147            android:directBootAware="true"
+147-->[com.google.firebase:firebase-common:20.4.3] /home/thinh/.gradle/caches/8.12/transforms/9477ba6c4a8eb0a00563c1eee27306e4/transformed/firebase-common-20.4.3/AndroidManifest.xml:26:13-43
+148            android:exported="false"
+148-->[com.google.firebase:firebase-common:20.4.3] /home/thinh/.gradle/caches/8.12/transforms/9477ba6c4a8eb0a00563c1eee27306e4/transformed/firebase-common-20.4.3/AndroidManifest.xml:27:13-37
+149            android:initOrder="100" />
+149-->[com.google.firebase:firebase-common:20.4.3] /home/thinh/.gradle/caches/8.12/transforms/9477ba6c4a8eb0a00563c1eee27306e4/transformed/firebase-common-20.4.3/AndroidManifest.xml:28:13-36
+150
+151        <service
+151-->[androidx.room:room-runtime-android:2.8.5] /home/thinh/.gradle/caches/8.12/transforms/a1ec65d75fc3a09764802bfbd435aa6e/transformed/room-runtime/AndroidManifest.xml:24:9-28:63
+152            android:name="androidx.room.MultiInstanceInvalidationService"
+152-->[androidx.room:room-runtime-android:2.8.5] /home/thinh/.gradle/caches/8.12/transforms/a1ec65d75fc3a09764802bfbd435aa6e/transformed/room-runtime/AndroidManifest.xml:25:13-74
+153            android:directBootAware="true"
+153-->[androidx.room:room-runtime-android:2.8.5] /home/thinh/.gradle/caches/8.12/transforms/a1ec65d75fc3a09764802bfbd435aa6e/transformed/room-runtime/AndroidManifest.xml:26:13-43
+154            android:exported="false" />
+154-->[androidx.room:room-runtime-android:2.8.5] /home/thinh/.gradle/caches/8.12/transforms/a1ec65d75fc3a09764802bfbd435aa6e/transformed/room-runtime/AndroidManifest.xml:27:13-37
+155
+156        <provider
+156-->[androidx.emoji2:emoji2:1.3.0] /home/thinh/.gradle/caches/8.12/transforms/da1072e13f2cf85f0095f540596baa8a/transformed/emoji2-1.3.0/AndroidManifest.xml:24:9-32:20
+157            android:name="androidx.startup.InitializationProvider"
+157-->[androidx.emoji2:emoji2:1.3.0] /home/thinh/.gradle/caches/8.12/transforms/da1072e13f2cf85f0095f540596baa8a/transformed/emoji2-1.3.0/AndroidManifest.xml:25:13-67
+158            android:authorities="com.thinhnk.fastapp.androidx-startup"
+158-->[androidx.emoji2:emoji2:1.3.0] /home/thinh/.gradle/caches/8.12/transforms/da1072e13f2cf85f0095f540596baa8a/transformed/emoji2-1.3.0/AndroidManifest.xml:26:13-68
+159            android:exported="false" >
+159-->[androidx.emoji2:emoji2:1.3.0] /home/thinh/.gradle/caches/8.12/transforms/da1072e13f2cf85f0095f540596baa8a/transformed/emoji2-1.3.0/AndroidManifest.xml:27:13-37
+160            <meta-data
+160-->[androidx.emoji2:emoji2:1.3.0] /home/thinh/.gradle/caches/8.12/transforms/da1072e13f2cf85f0095f540596baa8a/transformed/emoji2-1.3.0/AndroidManifest.xml:29:13-31:52
+161                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+161-->[androidx.emoji2:emoji2:1.3.0] /home/thinh/.gradle/caches/8.12/transforms/da1072e13f2cf85f0095f540596baa8a/transformed/emoji2-1.3.0/AndroidManifest.xml:30:17-75
+162                android:value="androidx.startup" />
+162-->[androidx.emoji2:emoji2:1.3.0] /home/thinh/.gradle/caches/8.12/transforms/da1072e13f2cf85f0095f540596baa8a/transformed/emoji2-1.3.0/AndroidManifest.xml:31:17-49
+163            <meta-data
+163-->[androidx.lifecycle:lifecycle-process:2.8.7] /home/thinh/.gradle/caches/8.12/transforms/88760864d725746cd78b7a45c852cbae/transformed/lifecycle-process-2.8.7/AndroidManifest.xml:29:13-31:52
+164                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+164-->[androidx.lifecycle:lifecycle-process:2.8.7] /home/thinh/.gradle/caches/8.12/transforms/88760864d725746cd78b7a45c852cbae/transformed/lifecycle-process-2.8.7/AndroidManifest.xml:30:17-78
+165                android:value="androidx.startup" />
+165-->[androidx.lifecycle:lifecycle-process:2.8.7] /home/thinh/.gradle/caches/8.12/transforms/88760864d725746cd78b7a45c852cbae/transformed/lifecycle-process-2.8.7/AndroidManifest.xml:31:17-49
+166            <meta-data
+166-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/thinh/.gradle/caches/8.12/transforms/86d4e280ff455acd1eda4e882cfafe36/transformed/profileinstaller-1.3.1/AndroidManifest.xml:29:13-31:52
+167                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+167-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/thinh/.gradle/caches/8.12/transforms/86d4e280ff455acd1eda4e882cfafe36/transformed/profileinstaller-1.3.1/AndroidManifest.xml:30:17-85
+168                android:value="androidx.startup" />
+168-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/thinh/.gradle/caches/8.12/transforms/86d4e280ff455acd1eda4e882cfafe36/transformed/profileinstaller-1.3.1/AndroidManifest.xml:31:17-49
+169        </provider>
+170
+171        <activity
+171-->[androidx.compose.ui:ui-tooling-android:1.7.6] /home/thinh/.gradle/caches/8.12/transforms/8978881deb418f15bb11c4cfa326f9e2/transformed/ui-tooling-release/AndroidManifest.xml:23:9-25:39
+172            android:name="androidx.compose.ui.tooling.PreviewActivity"
+172-->[androidx.compose.ui:ui-tooling-android:1.7.6] /home/thinh/.gradle/caches/8.12/transforms/8978881deb418f15bb11c4cfa326f9e2/transformed/ui-tooling-release/AndroidManifest.xml:24:13-71
+173            android:exported="true" />
+173-->[androidx.compose.ui:ui-tooling-android:1.7.6] /home/thinh/.gradle/caches/8.12/transforms/8978881deb418f15bb11c4cfa326f9e2/transformed/ui-tooling-release/AndroidManifest.xml:25:13-36
+174
+175        <meta-data
+175-->[com.google.android.gms:play-services-basement:18.3.0] /home/thinh/.gradle/caches/8.12/transforms/b36070fe821fc923c359f0727a34425f/transformed/play-services-basement-18.3.0/AndroidManifest.xml:21:9-23:69
+176            android:name="com.google.android.gms.version"
+176-->[com.google.android.gms:play-services-basement:18.3.0] /home/thinh/.gradle/caches/8.12/transforms/b36070fe821fc923c359f0727a34425f/transformed/play-services-basement-18.3.0/AndroidManifest.xml:22:13-58
+177            android:value="@integer/google_play_services_version" />
+177-->[com.google.android.gms:play-services-basement:18.3.0] /home/thinh/.gradle/caches/8.12/transforms/b36070fe821fc923c359f0727a34425f/transformed/play-services-basement-18.3.0/AndroidManifest.xml:23:13-66
+178
+179        <receiver
+179-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/thinh/.gradle/caches/8.12/transforms/86d4e280ff455acd1eda4e882cfafe36/transformed/profileinstaller-1.3.1/AndroidManifest.xml:34:9-52:20
+180            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+180-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/thinh/.gradle/caches/8.12/transforms/86d4e280ff455acd1eda4e882cfafe36/transformed/profileinstaller-1.3.1/AndroidManifest.xml:35:13-76
+181            android:directBootAware="false"
+181-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/thinh/.gradle/caches/8.12/transforms/86d4e280ff455acd1eda4e882cfafe36/transformed/profileinstaller-1.3.1/AndroidManifest.xml:36:13-44
+182            android:enabled="true"
+182-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/thinh/.gradle/caches/8.12/transforms/86d4e280ff455acd1eda4e882cfafe36/transformed/profileinstaller-1.3.1/AndroidManifest.xml:37:13-35
+183            android:exported="true"
+183-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/thinh/.gradle/caches/8.12/transforms/86d4e280ff455acd1eda4e882cfafe36/transformed/profileinstaller-1.3.1/AndroidManifest.xml:38:13-36
+184            android:permission="android.permission.DUMP" >
+184-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/thinh/.gradle/caches/8.12/transforms/86d4e280ff455acd1eda4e882cfafe36/transformed/profileinstaller-1.3.1/AndroidManifest.xml:39:13-57
+185            <intent-filter>
+185-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/thinh/.gradle/caches/8.12/transforms/86d4e280ff455acd1eda4e882cfafe36/transformed/profileinstaller-1.3.1/AndroidManifest.xml:40:13-42:29
+186                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+186-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/thinh/.gradle/caches/8.12/transforms/86d4e280ff455acd1eda4e882cfafe36/transformed/profileinstaller-1.3.1/AndroidManifest.xml:41:17-91
+186-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/thinh/.gradle/caches/8.12/transforms/86d4e280ff455acd1eda4e882cfafe36/transformed/profileinstaller-1.3.1/AndroidManifest.xml:41:25-88
+187            </intent-filter>
+188            <intent-filter>
+188-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/thinh/.gradle/caches/8.12/transforms/86d4e280ff455acd1eda4e882cfafe36/transformed/profileinstaller-1.3.1/AndroidManifest.xml:43:13-45:29
+189                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+189-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/thinh/.gradle/caches/8.12/transforms/86d4e280ff455acd1eda4e882cfafe36/transformed/profileinstaller-1.3.1/AndroidManifest.xml:44:17-85
+189-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/thinh/.gradle/caches/8.12/transforms/86d4e280ff455acd1eda4e882cfafe36/transformed/profileinstaller-1.3.1/AndroidManifest.xml:44:25-82
+190            </intent-filter>
+191            <intent-filter>
+191-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/thinh/.gradle/caches/8.12/transforms/86d4e280ff455acd1eda4e882cfafe36/transformed/profileinstaller-1.3.1/AndroidManifest.xml:46:13-48:29
+192                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+192-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/thinh/.gradle/caches/8.12/transforms/86d4e280ff455acd1eda4e882cfafe36/transformed/profileinstaller-1.3.1/AndroidManifest.xml:47:17-88
+192-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/thinh/.gradle/caches/8.12/transforms/86d4e280ff455acd1eda4e882cfafe36/transformed/profileinstaller-1.3.1/AndroidManifest.xml:47:25-85
+193            </intent-filter>
+194            <intent-filter>
+194-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/thinh/.gradle/caches/8.12/transforms/86d4e280ff455acd1eda4e882cfafe36/transformed/profileinstaller-1.3.1/AndroidManifest.xml:49:13-51:29
+195                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+195-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/thinh/.gradle/caches/8.12/transforms/86d4e280ff455acd1eda4e882cfafe36/transformed/profileinstaller-1.3.1/AndroidManifest.xml:50:17-95
+195-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/thinh/.gradle/caches/8.12/transforms/86d4e280ff455acd1eda4e882cfafe36/transformed/profileinstaller-1.3.1/AndroidManifest.xml:50:25-92
+196            </intent-filter>
+197        </receiver>
+198    </application>
+199
+200</manifest>

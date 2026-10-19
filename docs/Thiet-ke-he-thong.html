@@ -1,0 +1,735 @@
+<title>Thiết kế hệ thống Fast Trạm Sạc Nhanh</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* ── Design tokens ─────────────────────────────────────────────
+   Hướng: tài liệu kỹ thuật lấy hệ màu từ chính bản UI/UX của dự án:
+   xanh EV #047857, nền xanh xám rất nhạt, chữ xanh đen.
+   Type: Be Vietnam Pro (font của dự án) + JetBrains Mono cho dữ liệu.
+   Layout: tài liệu 2 cột, mục lục dính bên trái, nội dung 1 cột.
+   ─────────────────────────────────────────────────────────────── */
+:root{
+  --sans:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+
+  --bg:#F4F7F5;
+  --surface:#FFFFFF;
+  --surface-2:#EAF0EC;
+  --fg:#0B1F1A;
+  --muted:#4A5E57;
+  --line:#D6E2DC;
+  --accent:#047857;
+  --accent-2:#0B8F6A;
+  --accent-soft:#DCEFE6;
+  --warning:#9A4B06;
+  --warning-soft:#FBEEDC;
+  --danger:#A61B1B;
+  --danger-soft:#FAE4E4;
+  --info:#1D4ED8;
+  --info-soft:#E4EBFB;
+
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0B1512;
+    --surface:#11201B;
+    --surface-2:#182C24;
+    --fg:#E9F2ED;
+    --muted:#A2B7AD;
+    --line:#294239;
+    --accent:#3DDC97;
+    --accent-2:#66EDB3;
+    --accent-soft:#123529;
+    --warning:#F0B45A;
+    --warning-soft:#33270F;
+    --danger:#F58A8A;
+    --danger-soft:#351A1A;
+    --info:#8FB1FF;
+    --info-soft:#182440;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0B1512;
+  --surface:#11201B;
+  --surface-2:#182C24;
+  --fg:#E9F2ED;
+  --muted:#A2B7AD;
+  --line:#294239;
+  --accent:#3DDC97;
+  --accent-2:#66EDB3;
+  --accent-soft:#123529;
+  --warning:#F0B45A;
+  --warning-soft:#33270F;
+  --danger:#F58A8A;
+  --danger-soft:#351A1A;
+  --info:#8FB1FF;
+  --info-soft:#182440;
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--fg);
+  font-family:var(--sans);
+  font-size:15px;
+  line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:0 72px;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:2px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.page{max-width:1180px;margin:0 auto}
+
+.hero{padding-block:52px 34px;border-bottom:1px solid var(--line)}
+.eyebrow{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0}
+h1{font-size:clamp(2.05rem,4.4vw,3rem);line-height:1.08;letter-spacing:-.028em;font-weight:700;margin:12px 0 0;text-wrap:balance}
+.lede{font-size:1.05rem;color:var(--muted);max-width:64ch;margin:16px 0 0}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:5px 11px}
+.chip b{color:var(--fg);font-weight:600}
+
+.layout{display:grid;grid-template-columns:minmax(0,1fr);gap:0}
+.toc{display:none}
+.doc{min-width:0;padding-top:40px}
+
+@media (min-width:1020px){
+  .layout{grid-template-columns:200px minmax(0,1fr);gap:56px}
+  .toc{display:block;position:sticky;top:28px;align-self:start;padding-top:44px;font-size:13px}
+  .toc .toc-title{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:0 0 10px 12px}
+  .toc a{display:block;padding:5px 0 5px 12px;color:var(--muted);text-decoration:none;border-left:2px solid transparent;line-height:1.35}
+  .toc a:hover{color:var(--fg);border-left-color:var(--line)}
+  .toc a.sub{padding-left:24px;font-size:12.5px}
+}
+
+section{margin-top:58px;scroll-margin-top:24px}
+section.first{margin-top:0}
+.sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:12px}
+.sec-num{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--accent);letter-spacing:.08em;flex:none}
+h2{font-size:1.55rem;line-height:1.25;letter-spacing:-.018em;font-weight:700;margin:0;text-wrap:balance}
+h3{font-size:1.04rem;font-weight:600;margin:30px 0 6px;letter-spacing:-.005em}
+h4{font-size:13.5px;font-weight:600;margin:0 0 4px}
+p{margin:11px 0;max-width:70ch}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;margin:18px 0;background:var(--surface)}
+table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:580px}
+thead th{text-align:left;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:11px 14px;border-bottom:1px solid var(--line);background:var(--surface-2);white-space:nowrap}
+td{padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+tbody tr:last-child td{border-bottom:0}
+td:first-child{font-weight:600;white-space:nowrap}
+td.wrap:first-child{white-space:normal}
+td code{white-space:nowrap}
+
+code{font-family:var(--mono);font-size:.85em;background:var(--surface-2);border:1px solid var(--line);border-radius:5px;padding:1px 5px;color:var(--fg)}
+pre{font-family:var(--mono);font-size:12.3px;line-height:1.65;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:15px 17px;overflow-x:auto;margin:12px 0 0;tab-size:2}
+pre code{background:none;border:0;padding:0;font-size:inherit;white-space:pre}
+
+.grid{display:grid;gap:14px;margin:18px 0}
+.grid.two{grid-template-columns:repeat(auto-fit,minmax(270px,1fr))}
+.grid.three{grid-template-columns:repeat(auto-fit,minmax(235px,1fr))}
+.grid>*{min-width:0}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.card p{margin:5px 0 0;font-size:13px;color:var(--muted);max-width:none}
+.card .tag{display:inline-block;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;color:var(--accent);margin-bottom:7px}
+.card pre{margin-top:10px;font-size:11.8px;padding:12px 13px}
+
+.rail{list-style:none;margin:20px 0;padding:0}
+.rail li{position:relative;padding:0 0 22px 38px;border-left:2px solid var(--line);margin-left:12px}
+.rail li:last-child{border-left-color:transparent;padding-bottom:0}
+.rail li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--surface);border:2px solid var(--accent)}
+.rail b{display:block;font-size:14px;font-weight:600}
+.rail span{display:block;color:var(--muted);font-size:13.5px;margin-top:2px;max-width:68ch}
+
+.note{border:1px solid var(--line);border-left:3px solid var(--accent);background:var(--accent-soft);border-radius:0 10px 10px 0;padding:12px 16px;margin:18px 0;font-size:13.5px}
+.note b{font-weight:600}
+
+figure{margin:22px 0}
+.diagram{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px}
+.diagram svg{display:block;width:100%;height:auto}
+.diagram svg.wide{min-width:880px}
+.diagram svg.mid{min-width:780px}
+figcaption{font-size:12.5px;color:var(--muted);margin-top:8px;max-width:80ch}
+
+/* SVG diagram primitives */
+.diagram .box{fill:var(--surface);stroke:var(--line);stroke-width:1.25}
+.diagram .accent-box{fill:var(--surface);stroke:var(--accent);stroke-width:1.5}
+.diagram .sub{fill:var(--surface-2);stroke:none}
+.diagram text{font-family:var(--sans);fill:var(--fg)}
+.diagram .t{font-size:14px;font-weight:700}
+.diagram .s{font-size:11.5px;font-weight:400;fill:var(--muted)}
+.diagram .r{font-size:12px;font-weight:500}
+.diagram .l{font-size:10.5px;font-weight:500;fill:var(--muted)}
+.diagram .ln{stroke:var(--fg);stroke-width:1.2;fill:none}
+.diagram .ln-dash{stroke:var(--muted);stroke-width:1.2;fill:none;stroke-dasharray:4 4}
+.diagram .ah{fill:var(--fg)}
+.diagram .ah-muted{fill:var(--muted)}
+
+.states{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:16px 0;font-size:12.5px}
+.state{padding:5px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-weight:600;font-family:var(--mono);font-size:11.5px}
+.state.ok{color:var(--accent);border-color:var(--accent);background:var(--accent-soft)}
+.state.bad{color:var(--danger);border-color:var(--danger);background:var(--danger-soft)}
+.state.warn{color:var(--warning);border-color:var(--warning);background:var(--warning-soft)}
+.arrow{color:var(--muted);font-family:var(--mono);font-size:12px}
+
+ul.plain{margin:12px 0;padding-left:20px;max-width:72ch}
+ul.plain li{margin:6px 0}
+ul.plain li::marker{color:var(--accent)}
+
+.foot{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+.foot p{max-width:76ch;margin:6px 0}
+</style>
+
+<div class="page">
+
+<header class="hero">
+  <p class="eyebrow">Thiết kế hệ thống · v1.0</p>
+  <h1>Thiết kế hệ thống Fast Trạm Sạc Nhanh</h1>
+  <p class="lede">Ứng dụng bản đồ trạm sạc xe điện cho Android, viết bằng Kotlin, dùng Firebase gói Spark. Tài liệu mô tả chức năng phía người dùng và nguyên lý vận hành phía hệ thống, làm cơ sở triển khai và nghiệm thu.</p>
+  <div class="chips">
+    <span class="chip"><b>19/10/2026</b></span>
+    <span class="chip"><code>com.thinhnk.fastapp</code></span>
+    <span class="chip">Android · Kotlin · Compose</span>
+    <span class="chip">Firebase Spark · 0 đ</span>
+    <span class="chip"><b>4.540</b> trạm sạc</span>
+    <span class="chip"><b>25</b> màn hình</span>
+  </div>
+</header>
+
+<div class="layout">
+
+  <nav class="toc" aria-label="Mục lục">
+    <p class="toc-title">Nội dung</p>
+    <a href="#tom-tat">Tóm tắt</a>
+    <a href="#nguoi-dung">1 · Phía người dùng</a>
+    <a href="#vai-tro" class="sub">Vai trò và quyền</a>
+    <a href="#hanh-trinh" class="sub">Hành trình chính</a>
+    <a href="#chuc-nang" class="sub">Chức năng theo màn</a>
+    <a href="#he-thong">2 · Phía hệ thống</a>
+    <a href="#kien-truc" class="sub">Kiến trúc</a>
+    <a href="#thanh-phan" class="sub">Thành phần</a>
+    <a href="#nguyen-ly" class="sub">Nguyên lý vận hành</a>
+    <a href="#dong-bo" class="sub">Đồng bộ dữ liệu</a>
+    <a href="#du-lieu" class="sub">Mô hình dữ liệu</a>
+    <a href="#bao-mat" class="sub">Xác thực và phân quyền</a>
+    <a href="#chi-phi" class="sub">Hạn mức miễn phí</a>
+    <a href="#loi" class="sub">Tình huống biên</a>
+    <a href="#lo-trinh" class="sub">Lộ trình</a>
+    <a href="#cam-ket-du-lieu" class="sub">Cam kết dữ liệu</a>
+    <a href="#chot">3 · Điểm cần chốt</a>
+  </nav>
+
+  <main class="doc">
+
+    <section id="tom-tat" class="first">
+      <div class="sec-head"><span class="sec-num">00</span><h2>Tóm tắt</h2></div>
+      <p><b>Fast Trạm Sạc Nhanh</b> (dự án FAST-Recharge) giúp người lái xe điện tìm trạm sạc phù hợp: xem trạm trên bản đồ, lọc theo cổng và công suất, lưu trạm, góp ý và báo lỗi. Hệ thống chạy hoàn toàn trong hạn mức miễn phí của Firebase, ưu tiên hoạt động offline và giữ chi phí bằng 0 khi số người dùng còn nhỏ.</p>
+      <p>Ba quyết định định hình toàn bộ thiết kế:</p>
+      <div class="grid three">
+        <div class="card">
+          <span class="tag">Quyết định 1</span>
+          <h4>Dữ liệu trạm là file tĩnh có phiên bản</h4>
+          <p>4.540 trạm được đóng gói thành <code>stations.vN.json.gz</code> trên Hosting. App tải một lần, lưu vào Room, tìm kiếm và lọc tại máy.</p>
+        </div>
+        <div class="card">
+          <span class="tag">Quyết định 2</span>
+          <h4>Firestore chỉ giữ dữ liệu người dùng</h4>
+          <p>Tài khoản, xe, đóng góp, đánh giá, thông báo. Danh sách đã lưu giữ cục bộ trong giai đoạn 1, chưa đưa lên tài khoản.</p>
+        </div>
+        <div class="card">
+          <span class="tag">Quyết định 3</span>
+          <h4>UI đọc từ Room, mạng chỉ để đồng bộ</h4>
+          <p>Mọi màn hình đọc dữ liệu trạm từ máy. Tác vụ tải bản mới chạy nền bằng WorkManager, không chặn thao tác.</p>
+        </div>
+      </div>
+      <div class="note"><b>Vì sao không đưa trạm vào Firestore:</b> một lần đồng bộ 4.540 tài liệu tốn 4.540 lượt đọc, trong khi hạn mức Spark là 50.000 lượt đọc mỗi ngày. Chỉ vài lần mở app là cạn hạn mức. File tĩnh trên CDN không tính lượt đọc và có thể cache vĩnh viễn theo tên phiên bản.</div>
+    </section>
+
+    <section id="nguoi-dung">
+      <div class="sec-head"><span class="sec-num">01</span><h2>Phía người dùng: chức năng</h2></div>
+      <p>Ứng dụng có bốn vai trò. Ba vai trò đầu dùng trên Android; quản trị viên làm việc trên web quản trị, không nằm trong app di động.</p>
+
+      <h3 id="vai-tro">1.1 Vai trò và quyền</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Vai trò</th><th>Đăng nhập</th><th>Quyền chính</th><th>Giới hạn</th></tr></thead>
+          <tbody>
+            <tr><td>Khách</td><td>Không cần (Anonymous)</td><td>Xem bản đồ, tìm kiếm, lọc, xem chi tiết trạm và đánh giá đã duyệt</td><td>Không lưu trạm, không đóng góp, không đánh giá</td></tr>
+            <tr><td>Người dùng</td><td>Google hoặc email và mật khẩu</td><td>Lưu trạm, quản lý xe và cài đặt, gửi đóng góp, đánh giá, báo lỗi, nhận thông báo</td><td>Chỉ đọc và sửa dữ liệu của chính mình</td></tr>
+            <tr><td>Kiểm duyệt viên</td><td>Google + custom claim <code>moderator</code></td><td>Duyệt, gộp, từ chối đóng góp; xử lý báo lỗi trong khu vực được gán</td><td>Không sửa cấu hình hệ thống</td></tr>
+            <tr><td>Quản trị viên</td><td>Google + custom claim <code>admin</code></td><td>Quản lý trạm, người dùng, nhập dữ liệu, thống kê, nhật ký</td><td>Chỉ trên web quản trị</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="small muted">Khách dùng Firebase Anonymous Auth để có <code>uid</code> ổn định. Khi đăng nhập Google hoặc email, Firebase liên kết tài khoản và giữ nguyên dữ liệu đã tạo trước đó. Tài khoản email bắt buộc xác minh địa chỉ và có luồng quên mật khẩu qua email.</p>
+
+      <h3 id="hanh-trinh">1.2 Hành trình chính</h3>
+      <ol class="rail">
+        <li><b>Mở app</b><span>Splash giới thiệu. Nếu chưa có quyền vị trí, app hỏi quyền; người dùng có thể bỏ qua và vào thẳng bản đồ.</span></li>
+        <li><b>Bản đồ</b><span>Hiển thị trạm quanh vị trí hiện tại, marker phân biệt AC và DC, cụm trạm khi zoom xa, chip lọc nhanh: tương thích xe, DC nhanh, đang trống.</span></li>
+        <li><b>Tìm kiếm và lọc</b><span>Từ khóa theo tên, địa chỉ, nhà vận hành; lọc bán kính, loại cổng, công suất, nhà vận hành, đang mở, còn cổng trống. Kết quả xếp theo khoảng cách, có trạng thái không có kết quả.</span></li>
+        <li><b>Xem trạm</b><span>Thẻ trạm kéo lên hiển thị nhanh cổng, giá, tiện ích. Màn chi tiết có ảnh, giờ mở cửa, đánh giá, nút Đi tới, Lưu, Chia sẻ.</span></li>
+        <li><b>Thao tác cần tài khoản</b><span>Khi khách bấm Lưu, Đánh giá hoặc Đóng góp, app hiện nhắc đăng nhập. Sau khi đăng nhập, thao tác đang dở được tiếp tục, không phải làm lại.</span></li>
+        <li><b>Đóng góp trạm</b><span>Chọn vị trí trên bản đồ, nhập tên, công suất, loại cổng, chụp ảnh. Hệ thống gợi ý trạm trùng gần đó trước khi gửi duyệt.</span></li>
+        <li><b>Kiểm duyệt</b><span>Đóng góp vào hàng đợi của web quản trị. Kiểm duyệt viên duyệt, gộp với trạm có sẵn hoặc từ chối kèm lý do. Trạm đã duyệt xuất hiện trên bản đồ của mọi người.</span></li>
+      </ol>
+
+      <h3 id="chuc-nang">1.3 Chức năng theo màn hình</h3>
+      <p>Bảng dưới đối chiếu 25 màn trong bản demo với nguồn dữ liệu và nơi ghi dữ liệu của hệ thống mới.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Màn</th><th>Chức năng</th><th>Đọc từ</th><th>Ghi vào</th></tr></thead>
+          <tbody>
+            <tr><td>1 · Bản đồ chính</td><td>Marker AC/DC, cụm trạm, chip lọc nhanh, tìm trong khu vực, định vị, thanh điều hướng dưới</td><td>Room + GPS</td><td>—</td></tr>
+            <tr><td>2 · Tìm kiếm, lọc</td><td>Từ khóa, bán kính 5/10/20 km, loại cổng, công suất, nhà vận hành, đang mở, còn trống, xóa lọc</td><td>Room (FTS5 + bộ lọc)</td><td>Lịch sử tìm kiếm cục bộ</td></tr>
+            <tr><td>3 · Chi tiết trạm</td><td>Cổng và số trống, giá, giờ mở, tiện ích, đánh giá, ảnh; Đi tới, Lưu, Chia sẻ, Viết đánh giá, Báo lỗi</td><td>Room + reviews + stations_community</td><td>reviews, reports</td></tr>
+            <tr><td>4 · Đã lưu</td><td>Danh sách có tên (Nhà, Cơ quan, chuyến đi), tab Gần đây, tạo danh sách mới, mục <b>Đồng bộ tài khoản · Đang phát triển</b></td><td>Room (cục bộ)</td><td>Room · saved_lists, saved_items</td></tr>
+            <tr><td>5 · Thêm trạm</td><td>Chọn vị trí, tên, loại cổng, công suất, ảnh; cảnh báo trạm trùng; gửi duyệt</td><td>Room (dò trùng cục bộ)</td><td>contributions, Cloudinary</td></tr>
+            <tr><td>6 · Splash</td><td>Giới thiệu, Bắt đầu, xem với tư cách khách</td><td>—</td><td>—</td></tr>
+            <tr><td>7 · Đăng nhập</td><td>Google, email và mật khẩu, quên mật khẩu, xác minh email, điều khoản</td><td>Auth state</td><td>Firebase Auth</td></tr>
+            <tr><td>8 · Xe của tôi</td><td>Danh sách xe, mẫu xe, loại cổng, công suất DC tối đa, đặt mặc định</td><td>Firestore</td><td>Firestore</td></tr>
+            <tr><td>9 · Cài đặt</td><td>Ngôn ngữ, đơn vị, giao diện sáng/tối, xe mặc định, app dẫn đường, thông báo trạm yêu thích, quyền vị trí, <b>Nguồn dữ liệu và bản quyền</b></td><td>Firestore + Remote Config + resources</td><td>Firestore</td></tr>
+            <tr><td>10 · Hồ sơ</td><td>Tên, email, số đóng góp, đã duyệt, đánh giá; sửa hồ sơ, đăng xuất, xóa tài khoản</td><td>Firestore</td><td>Firestore</td></tr>
+            <tr><td>11 · Thông báo</td><td>Tab Tất cả, Trạm yêu thích, Đóng góp; đánh dấu đã đọc</td><td>Firestore</td><td>Firestore</td></tr>
+            <tr><td>12 · Báo lỗi, đánh giá</td><td>Số sao, bình luận, loại lỗi (hỏng, đóng, sai vị trí, khác), trạng thái hiện tại</td><td>Room</td><td>reviews, reports</td></tr>
+            <tr><td>19 · Xin quyền GPS</td><td>Giải thích mục đích, Cho phép khi dùng app, Để sau</td><td>Hệ điều hành</td><td>—</td></tr>
+            <tr><td>20 · Chưa có quyền</td><td>Tìm bằng địa chỉ, mở cài đặt hệ thống</td><td>Room</td><td>—</td></tr>
+            <tr><td>21 · Nhắc đăng nhập</td><td>Giải thích vì sao cần tài khoản, đăng nhập, tiếp tục xem bản đồ</td><td>Auth state</td><td>—</td></tr>
+            <tr><td>22 · Thẻ trạm</td><td>Thông tin nhanh: cổng, giá, tiện ích; Đi tới, Lưu, xem chi tiết đầy đủ</td><td>Room</td><td>Room (lưu cục bộ)</td></tr>
+            <tr><td>23 · Kết quả</td><td>Danh sách trạm gần nhất trước, số lượng kết quả, xem bản đồ, mở bộ lọc</td><td>Room</td><td>—</td></tr>
+            <tr><td>24 · Không kết quả</td><td>Gợi ý bỏ lọc, đổi từ khóa, mở rộng bán kính; thêm trạm còn thiếu</td><td>Room</td><td>—</td></tr>
+            <tr><td>25 · Chip lọc</td><td>Trạng thái chip đang chọn trên bản đồ</td><td>Room</td><td>—</td></tr>
+            <tr><td>13–18 · Admin web</td><td>Quản lý trạm, hàng đợi duyệt, xử lý báo lỗi, người dùng và quyền, nhập KML/CSV, thống kê và nhật ký</td><td>Firestore + file trạm</td><td>Firestore, pipeline</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="small muted"><b>Phạm vi giai đoạn 1:</b> màn 1–4, 6–11 và 19–25 — bản đồ, tìm kiếm và lọc, chi tiết trạm, tài khoản, danh sách đã lưu cục bộ. Màn 5 (thêm trạm), màn 12 (đánh giá, báo lỗi) và cụm admin 13–18 chuyển sang giai đoạn 2.</p>
+    </section>
+
+    <section id="he-thong">
+      <div class="sec-head"><span class="sec-num">02</span><h2>Phía hệ thống: kiến trúc và vận hành</h2></div>
+
+      <h3 id="kien-truc">2.1 Kiến trúc tổng thể</h3>
+      <figure>
+        <div class="diagram">
+          <svg class="wide" viewBox="0 0 980 570" role="img" aria-label="Sơ đồ kiến trúc: ứng dụng Android đọc dữ liệu trạm từ Firebase Hosting và ghi dữ liệu người dùng vào Firebase; pipeline GitHub Actions tải KML từ Google My Maps, đóng gói và đưa lên Hosting; admin web đọc ghi Firestore để duyệt dữ liệu.">
+            <!-- App -->
+            <rect class="box" x="24" y="160" width="230" height="264" rx="14"/>
+            <text class="t" x="139" y="188" text-anchor="middle">Ứng dụng Android</text>
+            <text class="s" x="139" y="206" text-anchor="middle">Kotlin · Jetpack Compose</text>
+            <rect class="sub" x="40" y="220" width="198" height="32" rx="8"/>
+            <text class="r" x="139" y="241" text-anchor="middle">UI Compose</text>
+            <rect class="sub" x="40" y="258" width="198" height="32" rx="8"/>
+            <text class="r" x="139" y="279" text-anchor="middle">Repository · UseCase</text>
+            <rect class="sub" x="40" y="296" width="198" height="32" rx="8"/>
+            <text class="r" x="139" y="317" text-anchor="middle">Room + FTS5</text>
+            <rect class="sub" x="40" y="334" width="198" height="32" rx="8"/>
+            <text class="r" x="139" y="355" text-anchor="middle">WorkManager · sync</text>
+            <rect class="sub" x="40" y="372" width="198" height="32" rx="8"/>
+            <text class="r" x="139" y="393" text-anchor="middle">Firebase SDK</text>
+
+            <!-- Firebase -->
+            <rect class="box" x="330" y="40" width="270" height="210" rx="14"/>
+            <text class="t" x="465" y="68" text-anchor="middle">Firebase · gói Spark</text>
+            <text class="s" x="465" y="86" text-anchor="middle">không dùng Storage, Functions</text>
+            <rect class="sub" x="346" y="100" width="238" height="30" rx="7"/>
+            <text class="r" x="465" y="120" text-anchor="middle">Auth · Google · Email · Ẩn danh</text>
+            <rect class="sub" x="346" y="138" width="238" height="30" rx="7"/>
+            <text class="r" x="465" y="158" text-anchor="middle">Firestore · dữ liệu người dùng</text>
+            <rect class="sub" x="346" y="176" width="238" height="30" rx="7"/>
+            <text class="r" x="465" y="196" text-anchor="middle">Remote Config · cờ tính năng</text>
+            <rect class="sub" x="346" y="214" width="238" height="30" rx="7"/>
+            <text class="r" x="465" y="234" text-anchor="middle">Crashlytics · Analytics · App Check</text>
+
+            <!-- Hosting -->
+            <rect class="accent-box" x="330" y="300" width="270" height="130" rx="14"/>
+            <text class="t" x="465" y="328" text-anchor="middle">Firebase Hosting</text>
+            <text class="s" x="465" y="346" text-anchor="middle">CDN · cache theo tên phiên bản</text>
+            <rect class="sub" x="346" y="358" width="238" height="28" rx="7"/>
+            <text class="r" x="465" y="377" text-anchor="middle">manifest.json · no-cache</text>
+            <rect class="sub" x="346" y="392" width="238" height="28" rx="7"/>
+            <text class="r" x="465" y="411" text-anchor="middle">stations.vN.json.gz · immutable</text>
+
+            <!-- Pipeline -->
+            <rect class="accent-box" x="700" y="300" width="256" height="130" rx="14"/>
+            <text class="t" x="828" y="328" text-anchor="middle">GitHub Actions</text>
+            <text class="s" x="828" y="346" text-anchor="middle">cron hàng tuần</text>
+            <rect class="sub" x="716" y="358" width="224" height="28" rx="7"/>
+            <text class="r" x="828" y="377" text-anchor="middle">KML → chuẩn hóa → registry</text>
+            <rect class="sub" x="716" y="392" width="224" height="28" rx="7"/>
+            <text class="r" x="828" y="411" text-anchor="middle">đóng gói + manifest + sha256</text>
+
+            <!-- Source -->
+            <rect class="box" x="700" y="470" width="256" height="80" rx="14"/>
+            <text class="t" x="828" y="498" text-anchor="middle">Google My Maps · FASTS</text>
+            <text class="s" x="828" y="518" text-anchor="middle">KML · evcs.vn · 4.540 trạm</text>
+
+            <!-- Admin -->
+            <rect class="box" x="700" y="40" width="256" height="210" rx="14"/>
+            <text class="t" x="828" y="68" text-anchor="middle">Admin web</text>
+            <text class="s" x="828" y="86" text-anchor="middle">Hosting · custom claims</text>
+            <rect class="sub" x="716" y="100" width="224" height="30" rx="7"/>
+            <text class="r" x="828" y="120" text-anchor="middle">Duyệt đóng góp</text>
+            <rect class="sub" x="716" y="138" width="224" height="30" rx="7"/>
+            <text class="r" x="828" y="158" text-anchor="middle">Xử lý báo lỗi</text>
+            <rect class="sub" x="716" y="176" width="224" height="30" rx="7"/>
+            <text class="r" x="828" y="196" text-anchor="middle">Quản lý trạm · người dùng</text>
+            <rect class="sub" x="716" y="214" width="224" height="30" rx="7"/>
+            <text class="r" x="828" y="234" text-anchor="middle">Import KML/CSV · thống kê</text>
+
+            <!-- Arrows -->
+            <line class="ln" x1="258" y1="214" x2="320" y2="214"/>
+            <polygon class="ah" points="330,214 320,209 320,219"/>
+            <text class="l" x="289" y="205" text-anchor="middle">user data</text>
+
+            <line class="ln" x1="258" y1="340" x2="320" y2="340"/>
+            <polygon class="ah" points="330,340 320,335 320,345"/>
+            <text class="l" x="289" y="331" text-anchor="middle">snapshot</text>
+
+            <line class="ln" x1="696" y1="340" x2="610" y2="340"/>
+            <polygon class="ah" points="600,340 610,335 610,345"/>
+            <text class="l" x="648" y="331" text-anchor="middle">upload</text>
+
+            <line class="ln" x1="696" y1="150" x2="610" y2="150"/>
+            <polygon class="ah" points="600,150 610,145 610,155"/>
+            <text class="l" x="648" y="141" text-anchor="middle">đọc / ghi</text>
+
+            <line class="ln" x1="828" y1="466" x2="828" y2="440"/>
+            <polygon class="ah" points="828,430 823,440 833,440"/>
+            <text class="l" x="838" y="452" text-anchor="start">curl</text>
+          </svg>
+        </div>
+        <figcaption>Ba vùng tách biệt: app chỉ đọc file trạm từ Hosting, ghi dữ liệu người dùng vào Firestore; pipeline không phục vụ trực tiếp người dùng; admin web ghi Firestore theo quyền.</figcaption>
+      </figure>
+
+      <h3 id="thanh-phan">2.2 Thành phần và trách nhiệm</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Thành phần</th><th>Trách nhiệm</th><th>Công nghệ</th></tr></thead>
+          <tbody>
+            <tr><td>App UI</td><td>25 màn hình, điều hướng, trạng thái, xử lý quyền và GPS</td><td>Jetpack Compose, Navigation</td></tr>
+            <tr><td>Repository</td><td>Gom dữ liệu trạm chính thức, overlay cộng đồng và dữ liệu người dùng thành luồng dữ liệu cho UI</td><td>Kotlin coroutines, Flow</td></tr>
+            <tr><td>Room</td><td>Bảng trạm, chỉ mục tìm kiếm FTS5, trạng thái đồng bộ</td><td>Room, SQLite</td></tr>
+            <tr><td>Sync worker</td><td>Kiểm tra manifest, tải snapshot, xác minh, hoán đổi dữ liệu, thử lại khi lỗi</td><td>WorkManager, OkHttp</td></tr>
+            <tr><td>Auth client</td><td>Đăng nhập Google, email và mật khẩu, ẩn danh, liên kết tài khoản, làm mới token</td><td>Firebase Auth</td></tr>
+            <tr><td>Firestore client</td><td>Đọc ghi dữ liệu người dùng, cache offline tự động</td><td>Firestore SDK</td></tr>
+            <tr><td>Pipeline dữ liệu</td><td>Tải KML, chuẩn hóa, giữ ID ổn định, tạo file phiên bản và manifest</td><td>GitHub Actions, Python</td></tr>
+            <tr><td>Hosting</td><td>Phát manifest, snapshot trạm và web quản trị qua CDN</td><td>Firebase Hosting</td></tr>
+            <tr><td>Cloudinary</td><td>Lưu ảnh trạm và ảnh đại diện (giai đoạn 2)</td><td>Cloudinary free</td></tr>
+            <tr><td>Admin web</td><td>Duyệt đóng góp, xử lý báo lỗi, quản lý trạm và người dùng, nhập dữ liệu</td><td>Web app, Firebase Auth</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="nguyen-ly">2.3 Bảy nguyên lý vận hành</h3>
+      <ol class="rail">
+        <li><b>Offline-first</b><span>Màn hình chỉ đọc Room. Khi mất mạng, mọi chức năng xem, tìm, lọc và xem chi tiết vẫn hoạt động. Tác vụ mạng chạy nền, có thử lại.</span></li>
+        <li><b>Một nguồn sự thật cho mỗi loại dữ liệu</b><span>Trạm chính thức lấy từ snapshot; dữ liệu người dùng lấy từ Firestore. Danh sách đã lưu giai đoạn 1 là ngoại lệ có chủ đích: chỉ nằm trên máy, vì chưa có cơ chế đồng bộ nhiều thiết bị. Không có bản sao thứ hai nào được sửa tay.</span></li>
+        <li><b>Snapshot có phiên bản</b><span>Mỗi bản dữ liệu có số phiên bản tăng dần, mã băm sha256 và tên file bất biến. App chỉ nâng cấp, không hạ cấp.</span></li>
+        <li><b>Tách lớp dữ liệu cộng đồng</b><span>Trạm từ đóng góp đã duyệt nằm ở <code>stations_community</code>, merge phía client theo thứ tự chính thức rồi cộng đồng. Pipeline định kỳ hấp thụ overlay vào snapshot kế tiếp.</span></li>
+        <li><b>ID trạm ổn định</b><span>Pipeline giữ registry ánh xạ trạm nguồn sang ID cố định. Trạm biến mất được đánh dấu tombstone, không xóa cứng.</span></li>
+        <li><b>Quyền tối thiểu</b><span>Security Rules chặn ghi trực tiếp vào dữ liệu chính thức. Kiểm duyệt viên và quản trị viên dùng custom claim.</span></li>
+        <li><b>Thiết kế trong hạn mức miễn phí</b><span>Không phụ thuộc Storage hay Functions. Mọi thứ nặng nằm ở file tĩnh, mọi thứ nhỏ nằm ở Firestore.</span></li>
+      </ol>
+
+      <h3 id="dong-bo">2.4 Đồng bộ dữ liệu trạm</h3>
+      <p>App không bao giờ tải cả bộ dữ liệu khi mở. Mỗi lần chạy nền, app kiểm tra một manifest nhỏ; chỉ khi phiên bản mới hơn mới tải snapshot.</p>
+      <figure>
+        <div class="diagram">
+          <svg class="mid" viewBox="0 0 980 250" role="img" aria-label="Luồng đồng bộ: kiểm tra manifest, tải snapshot, xác minh sha256, ghi bảng tạm, hoán đổi trong transaction; nếu xác minh lỗi thì xóa file tạm và giữ cơ sở dữ liệu cũ.">
+            <rect class="box" x="18" y="70" width="160" height="76" rx="12"/>
+            <text class="r" x="98" y="98" text-anchor="middle">1 · Manifest</text>
+            <text class="s" x="98" y="118" text-anchor="middle">ETag · version</text>
+            <text class="s" x="98" y="134" text-anchor="middle">≤ local thì dừng</text>
+
+            <rect class="box" x="218" y="70" width="160" height="76" rx="12"/>
+            <text class="r" x="298" y="98" text-anchor="middle">2 · Tải snapshot</text>
+            <text class="s" x="298" y="118" text-anchor="middle">vN.json.gz</text>
+            <text class="s" x="298" y="134" text-anchor="middle">~500 KB</text>
+
+            <rect class="box" x="418" y="70" width="160" height="76" rx="12"/>
+            <text class="r" x="498" y="98" text-anchor="middle">3 · Xác minh</text>
+            <text class="s" x="498" y="118" text-anchor="middle">sha256 · schema</text>
+            <text class="s" x="498" y="134" text-anchor="middle">count khớp</text>
+
+            <rect class="box" x="618" y="70" width="160" height="76" rx="12"/>
+            <text class="r" x="698" y="98" text-anchor="middle">4 · Ghi staging</text>
+            <text class="s" x="698" y="118" text-anchor="middle">bảng tạm trong Room</text>
+            <text class="s" x="698" y="134" text-anchor="middle">chưa ảnh hưởng UI</text>
+
+            <rect class="accent-box" x="818" y="70" width="144" height="76" rx="12"/>
+            <text class="r" x="890" y="98" text-anchor="middle">5 · Hoán đổi</text>
+            <text class="s" x="890" y="118" text-anchor="middle">transaction</text>
+            <text class="s" x="890" y="134" text-anchor="middle">+ tombstone</text>
+
+            <line class="ln" x1="178" y1="108" x2="208" y2="108"/>
+            <polygon class="ah" points="218,108 208,103 208,113"/>
+            <line class="ln" x1="378" y1="108" x2="408" y2="108"/>
+            <polygon class="ah" points="418,108 408,103 408,113"/>
+            <line class="ln" x1="578" y1="108" x2="608" y2="108"/>
+            <polygon class="ah" points="618,108 608,103 608,113"/>
+            <line class="ln" x1="778" y1="108" x2="808" y2="108"/>
+            <polygon class="ah" points="818,108 808,103 808,113"/>
+
+            <line class="ln-dash" x1="498" y1="146" x2="498" y2="178"/>
+            <polygon class="ah-muted" points="498,188 493,178 503,178"/>
+            <rect class="box" x="368" y="192" width="260" height="40" rx="10"/>
+            <text class="s" x="498" y="217" text-anchor="middle">Lỗi: xóa file tạm, giữ cơ sở dữ liệu cũ</text>
+          </svg>
+        </div>
+        <figcaption>Chỉ bước 5 chạm vào dữ liệu đang phục vụ UI, và nó chạy trong một transaction. Bất kỳ lỗi nào ở bước 1–4 đều để app nguyên trạng.</figcaption>
+      </figure>
+      <div class="grid two">
+        <div class="card">
+          <span class="tag">Phía pipeline</span>
+          <h4>Cách tạo bản online</h4>
+          <p>GitHub Actions chạy hàng tuần: tải KML từ link My Maps, chuẩn hóa tên và trường dữ liệu, giữ ID qua registry, sinh file nén và manifest mới, chỉ deploy khi nội dung thay đổi.</p>
+        </div>
+        <div class="card">
+          <span class="tag">Phía app</span>
+          <h4>Cách nhận bản online</h4>
+          <p>WorkManager chạy mỗi 24 giờ khi có mạng: kiểm tra manifest, tải file theo tên phiên bản, xác minh sha256, ghi staging, hoán đổi. Thử lại với backoff lũy thừa khi lỗi.</p>
+        </div>
+      </div>
+      <div class="note"><b>Vì sao tải toàn bộ thay vì vá từng phần:</b> file sau nén chỉ khoảng 500 KB, trong khi delta cần xử lý xung đột, thứ tự và phiên bản phức tạp hơn nhiều. Toàn bộ snapshot luôn đưa app về đúng trạng thái nguồn, không bị trôi dữ liệu.</div>
+
+      <h3 id="du-lieu">2.5 Mô hình dữ liệu</h3>
+      <div class="grid three">
+        <div class="card">
+          <span class="tag">Cục bộ · Room</span>
+          <h4>Cache trạm và tìm kiếm</h4>
+          <pre><code>stations(
+  id TEXT PK, name, address,
+  lat, lng, geohash,
+  operator, connectors, powers,
+  ports, pricePerKwh, openHours,
+  amenities, status, source,
+  removed INTEGER, updatedAt
+)
+stations_fts(name, address)
+saved_lists(id TEXT PK, name,
+  createdAt, sortOrder)
+saved_items(listId, stationId,
+  addedAt, PRIMARY KEY(listId, stationId))
+sync_state(key, version,
+           etag, lastSuccessAt)</code></pre>
+        </div>
+        <div class="card">
+          <span class="tag">Đám mây · Firestore</span>
+          <h4>Dữ liệu người dùng</h4>
+          <pre><code>users/{uid}
+  settings{lang,units,theme,
+           navApp,favAlerts}
+  vehicles/{vehicleId}
+  notifications/{notifId}
+contributions/{id}
+stations_community/{stationId}
+reviews/{id}
+reports/{id}
+audit_log/{id}</code></pre>
+        </div>
+        <div class="card">
+          <span class="tag">Tĩnh · Hosting</span>
+          <h4>Snapshot có phiên bản</h4>
+          <pre><code>{
+  "version": 42,
+  "count": 4540,
+  "stations": [{
+    "id": "st_00123",
+    "name": "VinFast Hạ Long",
+    "lat": 20.9512,
+    "lng": 107.0831,
+    "geohash": "w7mg1x2",
+    "operator": "VinFast",
+    "connectors": ["CCS2"],
+    "powers": [60],
+    "ports": 4,
+    "amenities": ["wc", "cafe", "roof"],
+    "ratingAvg": 4.5,
+    "ratingCount": 38,
+    "status": "active"
+  }]
+}</code></pre>
+        </div>
+      </div>
+      <p><code>manifest.json</code> nằm cạnh snapshot, rất nhỏ và không được cache lâu:</p>
+      <pre><code>{
+  "version": 42,
+  "releasedAt": "2026-10-19T00:00:00Z",
+  "url": "https://&lt;project&gt;.web.app/stations.v42.json.gz",
+  "sha256": "9f2c…",
+  "count": 4540,
+  "schema": 1,
+  "minAppVersion": 1,
+  "revoked": false
+}</code></pre>
+      <p class="small muted"><code>revoked: true</code> là cờ thu hồi dữ liệu theo cam kết 2.11: app xóa bảng trạm cục bộ ở lần đồng bộ kế tiếp. Room chứa bảng trạm, danh sách đã lưu cục bộ và trạng thái đồng bộ. Danh sách đã lưu chỉ giữ <code>stationId</code>, khi hiển thị thì join với bảng trạm. Dữ liệu người dùng khác do Firestore SDK tự cache khi offline, không nhân bản sang Room. Khi <code>ratingCount = 0</code>, giao diện hiển thị "Chưa có đánh giá" thay vì điểm 0.</p>
+      <p class="small muted"><b>Vì sao chưa đồng bộ danh sách đã lưu:</b> lưu ngoại tuyến thì đơn giản, nhưng đồng bộ theo tài khoản cần xử lý xung đột khi cùng một danh sách bị sửa trên hai máy và cần định nghĩa thứ tự ưu tiên khi một thiết bị ngoại tuyến lâu ngày. Giai đoạn 1 giữ danh sách trong Room; màn 4 hiển thị mục <b>Đồng bộ tài khoản · Đang phát triển</b> thay vì hứa hẹn tính năng chưa có. Hướng làm sau: lưu từng mục với <code>listId</code>, <code>stationId</code>, <code>updatedAt</code>, <code>deleted</code>; hợp nhất theo từng mục thay vì ghi đè cả danh sách; thao tác ngoại tuyến xếp hàng chờ rồi đẩy lên khi có mạng.</p>
+
+      <h3 id="bao-mat">2.6 Xác thực và phân quyền</h3>
+      <p>Người dùng đăng nhập bằng Google, email và mật khẩu, hoặc ẩn danh. Firebase Auth phát hành <code>uid</code>; Security Rules là nơi duy nhất quyết định ai được đọc ghi gì. Kiểm duyệt viên và quản trị viên nhận custom claim, gán bằng script quản trị một lần, không cần Cloud Functions. Không dùng OTP SMS vì phương thức này cần gói Blaze và phát sinh phí.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Đường dẫn</th><th>Quyền đọc</th><th>Quyền ghi</th></tr></thead>
+          <tbody>
+            <tr><td><code>stations_community</code></td><td>Mọi người</td><td>Chỉ <code>admin</code>; trạm chính thức không cho client ghi</td></tr>
+            <tr><td><code>users/{uid}/**</code></td><td>Chủ sở hữu</td><td>Chủ sở hữu, chỉ các trường được whitelist</td></tr>
+            <tr><td><code>contributions</code></td><td>Chủ sở hữu, <code>moderator</code>, <code>admin</code></td><td>Tạo: người dùng đã đăng nhập; đổi trạng thái: moderator hoặc admin</td></tr>
+            <tr><td><code>reviews</code>, <code>reports</code></td><td>Đã duyệt: mọi người; chờ duyệt: chủ sở hữu và moderator</td><td>Tạo: người dùng; duyệt hoặc xử lý: moderator</td></tr>
+            <tr><td><code>notifications</code></td><td>Chủ sở hữu</td><td>Tạo: admin; đổi cờ đã đọc: chủ sở hữu</td></tr>
+            <tr><td><code>audit_log</code></td><td><code>admin</code></td><td>Chỉ admin web qua claim, không cho người dùng thường</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="small muted">App Check bảo vệ Firestore khỏi request tự động từ ngoài app. Khi phát hành, bật Play Integrity cho Android.</p>
+
+      <h3 id="kiem-duyet">2.7 Đóng góp và kiểm duyệt</h3>
+      <p>Đóng góp đi qua một máy trạng thái rõ ràng, mọi bước do web quản trị thực hiện:</p>
+      <div class="states">
+        <span class="state warn">pending</span>
+        <span class="arrow">→</span>
+        <span class="state ok">approved</span>
+        <span class="arrow">→</span>
+        <span class="state ok">published · stations_community</span>
+      </div>
+      <div class="states">
+        <span class="state warn">pending</span>
+        <span class="arrow">→</span>
+        <span class="state bad">rejected · kèm lý do</span>
+        <span class="arrow" style="margin-left:10px">hoặc</span>
+        <span class="state ok">merged · gộp vào trạm cũ</span>
+      </div>
+      <ul class="plain">
+        <li>Đóng góp trạm mới đã duyệt tạo tài liệu trong <code>stations_community</code>; app merge lớp này lên lớp chính thức.</li>
+        <li>Đóng góp chỉnh sửa lưu các trường thay đổi; khi hiển thị, trường cộng đồng thắng trường chính thức.</li>
+        <li>Đánh giá đã duyệt cập nhật điểm trung bình và số lượng trong một transaction của web quản trị.</li>
+        <li>Trạm có từ 3 báo lỗi trở lên được gắn cờ <code>needs_check</code> để kiểm duyệt viên xử lý.</li>
+        <li>Pipeline định kỳ hấp thụ các thay đổi đã duyệt vào snapshot chính thức và đánh dấu đã nhập, tránh hai lớp cùng sửa một trường.</li>
+      </ul>
+
+      <h3 id="chi-phi">2.8 Hạn mức miễn phí và chi phí</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Dịch vụ</th><th>Miễn phí</th><th>Vai trò</th><th>Ước tính sử dụng</th></tr></thead>
+          <tbody>
+            <tr><td>Auth</td><td>Google, email/mật khẩu, ẩn danh: không giới hạn</td><td>Đăng nhập</td><td>Không đáng kể</td></tr>
+            <tr><td>Firestore</td><td>1 GB · 50.000 đọc/ngày · 20.000 ghi/ngày</td><td>Dữ liệu người dùng</td><td>Khoảng 2.000–5.000 phiên mở app mỗi ngày</td></tr>
+            <tr><td>Hosting</td><td>10 GB lưu · khoảng 360 MB chuyển/ngày</td><td>Manifest, snapshot, admin web</td><td>Khoảng 700 lượt tải snapshot 500 KB mỗi ngày</td></tr>
+            <tr><td>Remote Config</td><td>Không giới hạn</td><td>Cờ tính năng, cấu hình</td><td>Vài request mỗi phiên</td></tr>
+            <tr><td>Crashlytics, Analytics, App Check</td><td>Không giới hạn</td><td>Giám sát, chống lạm dụng</td><td>Không đáng kể</td></tr>
+            <tr><td>Cloudinary (GĐ2)</td><td>25 credit/tháng dùng chung: 1 credit = 1 GB lưu, 1 GB băng thông hoặc 1.000 biến đổi</td><td>Ảnh trạm</td><td>Khoảng 10.000 ảnh 0,5 MB nếu dành 5 credit cho lưu trữ</td></tr>
+            <tr><td>GitHub Actions</td><td>2.000 phút/tháng</td><td>Pipeline dữ liệu</td><td>Khoảng 4 phút mỗi tháng</td></tr>
+            <tr><td>FCM</td><td>Không giới hạn</td><td>Push (GĐ3)</td><td>Cần worker gửi miễn phí</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="small muted">Các con số là hạn mức công bố của gói Spark và có thể thay đổi; kiểm tra lại trong Firebase Console trước khi phát hành.</p>
+
+      <h3 id="loi">2.9 Xử lý lỗi và tình huống biên</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Tình huống</th><th>Hành vi hệ thống</th></tr></thead>
+          <tbody>
+            <tr><td>Mất mạng khi đang đồng bộ</td><td>Giữ snapshot cũ; WorkManager thử lại với backoff lũy thừa; app hoạt động bình thường</td></tr>
+            <tr><td>File tải về sai sha256 hoặc sai schema</td><td>Xóa file tạm, ghi log Crashlytics, giữ nguyên cơ sở dữ liệu cũ</td></tr>
+            <tr><td>Manifest trả phiên bản thấp hơn đang có</td><td>Không hạ cấp; chỉ nâng khi phiên bản lớn hơn</td></tr>
+            <tr><td>Trạm biến mất khỏi nguồn</td><td>Đánh dấu tombstone <code>removed=1</code>, giữ 90 ngày để danh sách đã lưu hiển thị trạng thái ngừng hoạt động</td></tr>
+            <tr><td>Link KML gãy hoặc My Maps đổi quyền</td><td>Snapshot cuối trên Hosting vẫn phục vụ app; workflow báo lỗi cho nhóm vận hành</td></tr>
+            <tr><td>Vượt hạn mức Firestore</td><td>App vẫn đọc trạm offline; ghi dữ liệu người dùng xếp hàng chờ và tự gửi lại</td></tr>
+            <tr><td>Đóng góp trùng trạm đã có</td><td>Gợi ý trạm cách dưới 80 m; kiểm duyệt viên chọn Gộp, giữ ID cũ và chuyển dữ liệu sang trạm đó</td></tr>
+            <tr><td>Người dùng đổi máy</td><td>Đăng nhập lại bằng Google hoặc email, Firestore khôi phục xe và cài đặt. Danh sách đã lưu chưa đồng bộ tài khoản nên không tự xuất hiện trên máy mới; màn 4 ghi rõ "Đồng bộ tài khoản đang phát triển"</td></tr>
+            <tr><td>App cài mới khi offline</td><td>Nạp seed trong APK, dùng đủ chức năng xem; đồng bộ khi có mạng</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="lo-trinh">2.10 Lộ trình triển khai</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Giai đoạn</th><th>Phạm vi</th><th>Dịch vụ</th></tr></thead>
+          <tbody>
+            <tr><td>1 · MVP</td><td>Màn 1–4, 6–11, 19–25: bản đồ, tìm kiếm/lọc, chi tiết trạm, tài khoản, danh sách đã lưu cục bộ; Auth, Room, pipeline trạm; giám sát lỗi. Chưa gồm đóng góp, đánh giá, báo lỗi và admin</td><td>Auth, Firestore, Hosting, Remote Config, Crashlytics, App Check</td></tr>
+            <tr><td>2 · Vận hành</td><td>Màn 5 và 12; admin web duyệt đóng góp, xử lý báo lỗi; ảnh trạm; overlay cộng đồng; đồng bộ danh sách đã lưu giữa các thiết bị</td><td>Thêm Cloudinary</td></tr>
+            <tr><td>3 · Mở rộng</td><td>Push FCM qua Cloudflare Worker; phiên bản iOS</td><td>Thêm FCM, Worker</td></tr>
+            <tr><td>4 · Quy mô</td><td>Chỉ khi vượt hạn mức: Cloud Functions, Cloud Storage, gói Blaze</td><td>Thêm Blaze, Functions, Storage</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="cam-ket-du-lieu">2.11 Cam kết sử dụng dữ liệu</h3>
+      <p>Dữ liệu trạm trong ứng dụng có nguồn gốc từ bản đồ công khai của <b>Công ty Cổ phần EVCS</b> (evcs.vn), tải về dưới dạng KML. Nhóm FAST-Recharge không sở hữu dữ liệu này, không phải đơn vị đại diện cho EVCS và chỉ dùng cho mục đích học tập, xây dựng đồ án.</p>
+
+      <div class="note">
+        <b>Ba cam kết, công bố nguyên văn trong ứng dụng và trong báo cáo đồ án:</b><br>
+        1. Ghi rõ nguồn dữ liệu thuộc về Công ty Cổ phần EVCS trong ứng dụng và báo cáo đồ án.<br>
+        2. Không chỉnh sửa làm sai lệch dữ liệu gốc, không phân phối lại dữ liệu cho bên thứ ba.<br>
+        3. Sẵn sàng gỡ bỏ hoặc ngừng sử dụng dữ liệu nếu Quý Công ty yêu cầu.
+      </div>
+
+      <p>Nội dung ghi công dùng thống nhất ở mọi nơi, đặt trong resources của app và chép nguyên vào báo cáo:</p>
+      <pre><code>Dữ liệu trạm sạc trong ứng dụng được tham chiếu từ bản đồ trạm sạc công khai của
+Công ty Cổ phần EVCS (evcs.vn). Dữ liệu thuộc quyền sở hữu của EVCS; nhóm FAST-Recharge
+sử dụng cho mục đích học tập, không chỉnh sửa làm sai lệch dữ liệu gốc và không phân phối
+lại cho bên thứ ba. Nhóm sẵn sàng gỡ bỏ hoặc ngừng sử dụng dữ liệu nếu Quý Công ty yêu cầu.</code></pre>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Cam kết</th><th>Cách hiện thực</th><th>Kiểm chứng</th></tr></thead>
+          <tbody>
+            <tr><td><b>1 · Ghi rõ nguồn</b></td>
+              <td>Trong app: mục <b>Cài đặt → Nguồn dữ liệu và bản quyền</b> mở màn thông tin có câu ghi công đầy đủ; màn chi tiết trạm có dòng <i>Nguồn: EVCS</i>; màn Splash và phần Giới thiệu dẫn tới cùng nội dung. Trong báo cáo đồ án: mục <b>Nguồn dữ liệu</b> ở phần mở đầu và trong phụ lục tài liệu tham khảo.</td>
+              <td>Chuỗi cố định <code>data_source_credit</code> trong resources, không sinh động; ảnh chụp màn hình đưa vào phụ lục báo cáo</td></tr>
+            <tr><td><b>2 · Không làm sai lệch, không phân phối lại</b></td>
+              <td>Pipeline lưu nguyên file KML gốc kèm sha256; bước chuẩn hóa chỉ ánh xạ trường, không sửa giá trị. Mọi bổ sung của cộng đồng nằm ở bảng riêng <code>stations_community</code>, gắn nhãn "Cộng đồng bổ sung", không ghi đè trường gốc. App không có nút xuất hay tải hàng loạt; snapshot chỉ phục vụ app qua Hosting, không mở API công khai, không chia sẻ cho nhóm khác, không dùng cho mục đích thương mại.</td>
+              <td>File gốc và sha256 lưu trong kho pipeline; diff chỉ gồm phép biến đổi ánh xạ; rà soát quyền truy cập Hosting và danh sách endpoint để chắc chắn không có đường tải dữ liệu</td></tr>
+            <tr><td><b>3 · Sẵn sàng gỡ bỏ</b></td>
+              <td>Khi EVCS yêu cầu: bật cờ <code>dataSourceEnabled = false</code> trên Remote Config để ẩn toàn bộ dữ liệu nguồn EVCS ngay lần mở app kế tiếp; deploy manifest có <code>revoked: true</code> để các bản đã cài xóa bảng trạm cục bộ; gỡ file <code>stations.vN.json.gz</code> khỏi Hosting; phát hành bản cập nhật bỏ snapshot đóng gói trong APK. Mục tiêu hoàn tất trong 7 ngày kể từ khi nhận yêu cầu bằng văn bản.</td>
+              <td>Ghi lại thời điểm yêu cầu, người xử lý và từng bước trong nhật ký dự án; xác nhận lại bằng văn bản cho EVCS</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="small muted">Giới hạn cần nói rõ: không thể thu hồi APK đã cài trên máy người dùng. Vì vậy Remote Config và manifest thu hồi là hai lớp xử lý nhanh nhất; bản cập nhật bỏ dữ liệu đóng gói là lớp cuối. Nếu chưa có thỏa thuận với EVCS trước khi phát hành, phương án dự phòng là chỉ dùng dữ liệu do cộng đồng đóng góp và nguồn có giấy phép mở.</p>
+    </section>
+
+    <section id="chot">
+      <div class="sec-head"><span class="sec-num">03</span><h2>Điểm cần chốt</h2></div>
+      <p>Các điểm dưới đây lấy từ tài liệu gốc và bổ sung trong quá trình thiết kế. Mỗi dòng kèm đề xuất để nhóm quyết định nhanh.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Vấn đề</th><th>Đề xuất</th></tr></thead>
+          <tbody>
+            <tr><td>Bán kính mặc định</td><td>5 km, cho phép chọn 5, 10, 20 km; ghi rõ trong màn lọc</td></tr>
+            <tr><td>Ngưỡng dò trùng</td><td>Gợi ý khi cách dưới 80 m; giai đoạn 1 không tự động gộp. Kiểm duyệt viên quyết định gộp; nếu sau này tự động hóa thì chỉ khi dưới 30 m và tên trùng sau chuẩn hóa</td></tr>
+            <tr><td>Trạng thái thời gian thực</td><td>Nguồn hiện tại không có dữ liệu realtime, nên hiển thị "Cập nhật lần cuối" thay cho "Trống 3/4" tuyệt đối. Phải sửa màn 1, 3 và 22 của bản demo vì đang hiện số trống như chắc chắn</td></tr>
+            <tr><td>Trường dữ liệu bổ sung</td><td>Thêm tiện ích, điểm trung bình, số đánh giá, cổng GB/T, trạng thái đã đóng vào schema ngay từ phiên bản đầu. Khi số đánh giá bằng 0, hiển thị "Chưa có đánh giá", không hiện điểm 0 hay số liệu bịa</td></tr>
+            <tr><td>Lưu ảnh trạm</td><td>Giai đoạn 1 chưa cho gửi ảnh. Giai đoạn 2 dùng Cloudinary free: 25 credit/tháng dùng chung cho lưu trữ, băng thông và biến đổi, nên phải theo dõi hạn mức. Không dùng Firebase Storage vì cần Blaze</td></tr>
+            <tr><td>Phương thức đăng nhập</td><td>Chỉ Google, email/mật khẩu và khách ẩn danh. Không dùng OTP SMS vì cần gói Blaze và phát sinh phí; bật xác minh email và quên mật khẩu qua email</td></tr>
+            <tr><td>Quyền dữ liệu trạm</td><td>Dữ liệu thuộc <b>Công ty Cổ phần EVCS</b> (evcs.vn). Nhóm đã gửi yêu cầu sử dụng tới EVCS và vẫn thực hiện đủ ba cam kết ở mục 2.11: ghi rõ nguồn trong app và báo cáo đồ án, không làm sai lệch dữ liệu gốc, không phân phối lại, sẵn sàng gỡ bỏ trong 7 ngày</td></tr>
+            <tr><td>Phạm vi giai đoạn 1</td><td>Chỉ lõi bản đồ: bản đồ, tìm kiếm và lọc, chi tiết trạm, tài khoản, lưu trạm cục bộ. Đóng góp trạm, đánh giá, báo lỗi và admin để giai đoạn 2</td></tr>
+            <tr><td>Nguồn KML không chính thức</td><td>Link My Maps là đường dẫn cộng đồng, Google có thể ngừng hỗ trợ. Pipeline lưu lại mỗi bản KML tải được và luôn giữ snapshot dự phòng trên Hosting; nếu link gãy thì dùng bản lưu gần nhất hoặc xuất KML thủ công</td></tr>
+            <tr><td>ID trạm và trùng lặp</td><td>Chốt registry do pipeline quản lý; mọi thay đổi ID phải qua registry, không sinh ID từ tên hoặc tọa độ tại client</td></tr>
+            <tr><td>Chu kỳ đồng bộ</td><td>Pipeline chạy hàng tuần; app kiểm tra manifest mỗi 24 giờ hoặc khi mở app nếu đã quá 24 giờ</td></tr>
+            <tr><td>Dữ liệu mặc định trong app</td><td>Bắt buộc đóng gói một snapshot trong APK để app dùng được ngay khi cài offline hoặc lần đầu chưa có mạng</td></tr>
+            <tr><td>Tên gói và tên ứng dụng</td><td><code>com.thinhnk.fastapp</code> · tên hiển thị <b>Fast Trạm Sạc Nhanh</b>. Chốt trước khi tạo <code>google-services.json</code>; không đổi sau khi phát hành</td></tr>
+            <tr><td>Đồng bộ danh sách đã lưu</td><td>Giai đoạn 1 chỉ lưu cục bộ trong Room, không đồng bộ tài khoản; màn 4 hiển thị "Đồng bộ tài khoản · Đang phát triển". Chưa chốt cơ chế xử lý xung đột nên chưa làm; khi làm thì hợp nhất theo từng mục với <code>updatedAt</code> và <code>deleted</code>, không ghi đè cả danh sách</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="note"><b>Nguyên tắc khi có bất đồng:</b> nếu một tính năng đòi hỏi Cloud Storage, Cloud Functions hoặc ghi trực tiếp vào dữ liệu trạm chính thức, tính năng đó chuyển sang giai đoạn sau và phải có phương án thay thế trong hạn mức Spark. Đây là ràng buộc chung của nhóm, không phải chi tiết kỹ thuật riêng của từng màn.</div>
+
+      <footer class="foot">
+        <p>Nguồn: <b>Bảng nút – chức năng – API – màn hình</b> (19/10/2026), bộ UI/UX 25 màn <b>FASTS</b>. Dữ liệu trạm <b>FASTS.geojson</b> / KML thuộc <b>Công ty Cổ phần EVCS</b> (evcs.vn), 4.540 trạm, được sử dụng cho mục đích học tập theo cam kết tại mục 2.11.</p>
+        <p>Phiên bản 1.1 · 19/10/2026 · Tài liệu nội bộ của nhóm FAST-Recharge.</p>
+      </footer>
+    </section>
+
+  </main>
+</div>
+</div>

@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.thinhnk.fastapp-mergeDebugResources-57:/values-he/values-he.xml",
+            "map": [
+                {
+                    "source": "/home/thinh/.gradle/caches/8.12/transforms/259a59ab850e0be438263053c3069e51/transformed/android-sdk-12.3.1/res/values-he/values-he.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8",
+                        "startColumns": "4,4,4,4,4,4,4",
+                        "startOffsets": "55,179,257,375,480,634,750",
+                        "endColumns": "123,77,117,104,153,115,138",
+                        "endOffsets": "174,252,370,475,629,745,884"
+                    }
+                }
+            ]
+        }
+    ]
+}

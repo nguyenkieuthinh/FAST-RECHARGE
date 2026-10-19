@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Fast Trạm Sạc Nhanh</string>
+
+    <!-- Dán Web client ID của Firebase vào đây. Xem docs/HUONG-DAN-FIREBASE.md mục 3.2. -->
+    <string name="google_web_client_id">917969299667-1qhfqjic7qj2sualhnj6eknq2oktaks2.apps.googleusercontent.com</string>
+
+    <string name="app_tagline">Tìm trạm sạc phù hợp với xe của bạn, ở bất cứ đâu.</string>
+    <string name="tab_map">Bản đồ</string>
+    <string name="tab_saved">Đã lưu</string>
+    <string name="tab_profile">Hồ sơ</string>
+
+    <string name="search_hint">Tìm trạm, địa chỉ, nhà vận hành</string>
+    <string name="login_title">Đăng nhập</string>
+    <string name="login_subtitle">Khách vẫn xem được bản đồ. Đăng nhập để lưu trạm và đồng bộ hồ sơ.</string>
+    <string name="continue_google">Tiếp tục với Google</string>
+    <string name="continue_email">Đăng nhập bằng email</string>
+    <string name="create_account">Tạo tài khoản mới</string>
+    <string name="continue_guest">Xem bản đồ với tư cách khách</string>
+    <string name="email">Email</string>
+    <string name="password">Mật khẩu</string>
+    <string name="forgot_password">Quên mật khẩu?</string>
+
+    <string name="data_credit">Nguồn dữ liệu trạm: Công ty Cổ phần EVCS (evcs.vn). Ứng dụng dùng cho mục đích học tập; không phân phối lại dữ liệu.</string>
+    <string name="map_credit">Bản đồ: © OpenStreetMap contributors · OpenFreeMap</string>
+    <string name="saved_dev_title">Đang phát triển</string>
+    <string name="saved_dev_body">Danh sách đã lưu hiện chỉ nằm trên thiết bị này và chưa đồng bộ với tài khoản. Bạn vẫn có thể lưu và bỏ lưu trạm bình thường.</string>
+    <string name="saved_empty">Chưa lưu trạm nào.\nMở bản đồ và bấm Lưu ở thẻ trạm.</string>
+    <string name="firebase_missing_title">Chưa cấu hình Firebase</string>
+    <string name="firebase_missing_body">Đặt file google-services.json vào app/ và dán google_web_client_id vào strings.xml. Xem docs/HUONG-DAN-FIREBASE.md.</string>
+</resources>
